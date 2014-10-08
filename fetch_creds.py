@@ -39,7 +39,7 @@ def return_aws_keys(creds_path):
 
     # Return keys
     return aws_access_key_id,\
-           aws_secret_access_key,\
+           aws_secret_access_key
 
 
 # Function to return RDS secure environment variables
