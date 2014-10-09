@@ -1,4 +1,4 @@
-py_utils
+py-tools
 ========
 
 Various utilities I've created for Python
