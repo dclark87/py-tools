@@ -13,6 +13,5 @@ Dependencies
 - [Boto](http://boto.readthedocs.org/en/latest/) - Python package for interacting with Amazon Web Services
 - [cx_Oracle](http://cx-oracle.readthedocs.org/en/latest/index.html) - Python package for interacting with Oracle databases
 - [Nibabel](http://nipy.org/nibabel/api.html) - Python package for read/write access to various neuroimaging data formats
-- [Nipype](http://nipy.sourceforge.net/nipype/documentation.html) - Python package for Neuroimaging data analysis pipelines
 - [Numpy](http://docs.scipy.org/doc/numpy/reference/) - Python package for fast numerical computations
 - [pandas](http://pandas.pydata.org/) - Python package for providing high-performance and easy-to-use data structures/analysis tools
