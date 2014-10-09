@@ -1,7 +1,7 @@
 py-tools
 ========
 
-This repository contains my ptools Python package. This package incorporates various Python modules I have developed.
+This repository contains the Python package pytools. The package contains modules with various useful tools.
 
 Contents
 --------
