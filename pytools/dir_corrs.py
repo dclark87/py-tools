@@ -23,10 +23,10 @@ def barplot_dict(in_dict):
     -------
 
     '''
-    
+
     # Import packages
     import matplotlib.pyplot as plt
-    
+
     # Setup plot
     plt.bar(range(len(in_dict)), in_dict.values(), align='center')
     plt.xticks(range(len(in_dict)), in_dict.keys())
