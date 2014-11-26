@@ -1,4 +1,4 @@
-# logtools.py
+# log_tools.py
 #
 # Author: Daniel Clark, 2014
 
@@ -40,12 +40,12 @@ def setup_logger(logger_name, log_file, level, to_screen=False):
     logger = logging.getLogger(logger_name)
     logger.setLevel(level)
     formatter = logging.Formatter('%(asctime)s : %(message)s')
-    
+
     # Write logs to file
     fileHandler = logging.FileHandler(log_file)
     fileHandler.setFormatter(formatter)
     logger.addHandler(fileHandler)
-    
+
     # Write to screen, if desired
     if to_screen:
         streamHandler = logging.StreamHandler()

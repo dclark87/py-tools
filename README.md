@@ -5,8 +5,10 @@ This repository contains the Python package pytools. The package contains module
 
 Contents
 --------
+- aws_utils.py - This module contains functions which assist in interacting with AWS services, including uploading/downloading data and file checking.
 - dir_corrs.py - This module contains functions which perform various directory-based correlation analysis, specifically on nifti neuro-imaging data.
 - fetch_creds.py - This module contains functions which return sensitive information from a csv file, with regards to connection to AWS services.
+- log_tools.py - This module contains functions which help set up logging for python coding and scripts.
 
 Dependencies
 ------------
