@@ -1,6 +1,7 @@
-# aws_utils.py
+# pytools/aws_utils.py
 #
-# Author: Daniel Clark, 2014
+# Contributing authors:
+# Daniel Clark
 
 '''
 This module contains functions which assist in interacting with AWS
@@ -88,7 +89,7 @@ def s3_rename(bucket, src_list, dst_list):
         if not dst_exists:
             print 'copying source: ', str(src_key.key)
             print 'to destination: ', dst_key
-            src_key.copy(b,dst_key)
+            src_key.copy(bucket, dst_key)
             src_key.delete()
         else:
             print '%s already exists' % dst_key
@@ -137,7 +138,7 @@ def s3_delete(bucket, in_list):
 
 
 # Download files from AWS S3 to local machine
-def s3_download(bucket, in_list, local_prefix):
+def s3_download(bucket, in_list, local_prefix, bucket_prefix=''):
     '''
     Method to download files from an AWS S3 bucket that have the same
     names as those of an input list to a local directory.
@@ -150,6 +151,10 @@ def s3_download(bucket, in_list, local_prefix):
         a list of relative paths of the files to download from the bucket
     local_prefix : string
         local directory prefix to store the downloaded data
+    bucket_prefix : string (optional)
+        bucket_prefix, if specified, will be substituted with
+        local_prefix; otherwise, the local_prefix will only prepend the
+        downloaded files
 
     Returns
     -------
@@ -164,14 +169,21 @@ def s3_download(bucket, in_list, local_prefix):
     # Init variables
     no_files = len(in_list)
     i = 0
+    # Check for trailing '/'
+    if not local_prefix.endswith('/'):
+        local_prefix = local_prefix + '/'
+    if bucket_prefix and not bucket_prefix.endswith('/'):
+        bucket_prefix = bucket_prefix + '/'
     # For each item in the list, try to download it
     for f in in_list:
         i += 1
-        remote_filename = bucket.name + '/' + f
-        local_filename = local_prefix + '/' + f
+        remote_filename = bucket.name + ': ' + f
+        if bucket_prefix:
+            local_filename = f.replace(bucket_prefix, local_prefix)
+        else:
+            local_filename = os.path.join(local_prefix, f)
         # Check to see if the local folder setup exists or not
-        local_folders = local_filename.split('/')[:-1]
-        local_folders = '/'.join(local_folders)
+        local_folders = os.path.dirname(local_filename)
         if not os.path.isdir(local_folders):
             print 'creating %s on local machine' % local_folders
             os.makedirs(local_folders)
