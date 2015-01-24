@@ -67,6 +67,7 @@ def nifti_corrs(dir1, dir2, filt_str=''):
     import nibabel as nb
     import numpy as np
     import os
+    import pytools.logtools
 
     # Init variables
     dir1_niftis = []
@@ -95,23 +96,37 @@ def nifti_corrs(dir1, dir2, filt_str=''):
     print '\nDone creating correlation lists, now computing correlations on %d files:\n' % no_files
     i = 0
     for f in rel_dir1_niftis:
-        if f not in rel_dir2_niftis:
-            dir1_only.append(f)
-        else:
+        # If the file is also in dir2, do correlation
+        if f in rel_dir2_niftis:
             # Update progress to stdout
             per = 100*(float(i)/no_files)
             print 'Correlating: %s\nFile no: %d/%d\n%f%% complete' % (f, i, no_files, per)
-            try:
-                img1 = nb.load(dir1 + f).get_data()
-                img2 = nb.load(dir2 + f).get_data()
-                arr1 = img1.flatten()
-                arr2 = img2.flatten()
-                R = np.corrcoef(arr1,arr2)
-                rval = R[0,1]
-                corr_dict[f] = rval
-                print 'Correlation: %f' % rval
-            except:
-                print 'Error during correlation calc!'
+            file1 = os.path.abspath(dir1 + f)
+            file2 = os.path.abspath(dir2 + f)
+            f1_exists = os.path.exists(file1)
+            f2_exists = os.path.exists(file2)
+            # Check if the inputs exist
+            if not (f1_exists and f2_exists):
+                err = 'One of the input files is missing or not correct'
+                err = err + '\n%s exists: %d\n%s exists: %d' \
+                            % (file1, f1_exists, file2, f2_exists)
+            img1 = nb.load(file1).get_data()
+            img2 = nb.load(file2).get_data()
+            arr1 = img1.flatten()
+            arr2 = img2.flatten()
+            # Test to see if the arrays are the same length
+            if len(arr1) != len(arr2):
+                err = 'The input arrays must be the same length'
+                err = err + '\n%s has %d elements, %s has %d elements' \
+                             % (dir1+f, len(arr1), dir2+f, len(arr2))
+                raise ValueError, err
+            R = np.corrcoef(arr1,arr2)
+            rval = R[0,1]
+            corr_dict[f] = rval
+            print 'Correlation: %f' % rval
+        # Otherwise, append it to dir1_only list
+        else:
+            dir1_only.append(f)
         # Increment file counter
         i += 1
 
