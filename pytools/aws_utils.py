@@ -1,4 +1,4 @@
-# CPAC/AWS/aws_utils.py
+# pytools/aws_utils.py
 #
 # Contributing authors:
 # Daniel Clark

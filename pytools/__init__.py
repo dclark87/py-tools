@@ -10,4 +10,5 @@ The pytools package contains modules with various useful tools.
 import aws_utils
 import dir_corrs
 import fetch_creds
+import file_utils
 import log_tools
