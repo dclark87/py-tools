@@ -7,6 +7,7 @@ This module contains functions which perform various directory-based
 correlation analysis.
 '''
 
+
 # Plot a dictionary of 
 def barplot_dict(in_dict):
     '''
@@ -67,7 +68,6 @@ def nifti_corrs(dir1, dir2, filt_str=''):
     import nibabel as nb
     import numpy as np
     import os
-    import pytools.logtools
 
     # Init variables
     dir1_niftis = []

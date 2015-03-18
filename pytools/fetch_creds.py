@@ -8,6 +8,7 @@ This module contains functions which return sensitive information from
 a csv file, with regards to connection to AWS services.
 '''
 
+
 # Function to return AWS secure environment variables
 def return_aws_keys(creds_path):
     '''
