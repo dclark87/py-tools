@@ -10,7 +10,7 @@ services, including uploading/downloading data and file checking.
 
 
 # Get the MD5 sums of files on S3
-def md5_sum(bucket, prefix='', filt_str=''):
+def gather_md5(bucket, prefix='', filt_str=''):
     '''
     Function to get the filenames and MD5 checksums of files stored in
     an S3 bucket and return this as a dictionary.
@@ -34,7 +34,7 @@ def md5_sum(bucket, prefix='', filt_str=''):
     '''
 
     # Import packages
-    import file_utils
+    from . import file_utils
 
     # Init variables
     blist = bucket.list(prefix=prefix)
@@ -93,28 +93,28 @@ def s3_rename(bucket, src_list, dst_list,
         raise ValueError('src_list and dst_list are different lengths!')
 
     # Import packages
-    import file_utils
+    from . import file_utils
 
     # Init variables
     i = 0
     no_files = len(src_list)
 
     # And iterate over keys to copy over new ones
-    for f in src_list:
-        src_key = bucket.get_key(f)
+    for src_f in src_list:
+        src_key = bucket.get_key(src_f)
         if not src_key:
-            print 'source file %s doesnt exist, skipping...' % f
+            print 'source file %s doesnt exist, skipping...' % src_f
             continue
-        dst_key = dst_list[i]
-        dst_exists = bucket.get_key(dst_key)
-        if not dst_exists or overwrite:
+        dst_f = dst_list[i]
+        dst_key = bucket.get_key(dst_f)
+        if not dst_key or overwrite:
             print 'copying source: ', str(src_key.key)
-            print 'to destination: ', dst_key
-            src_key.copy(bucket.name, dst_key)
+            print 'to destination: ', dst_f
+            src_key.copy(bucket.name, dst_f)
             if make_public:
                 print 'making public...'
-                dk = bucket.get_key(dst_key)
-                dk.make_public()
+                dst_key = bucket.get_key(dst_f)
+                dst_key.make_public()
             if not keep_old:
                 src_key.delete()
         else:
@@ -145,20 +145,20 @@ def s3_delete(bucket, in_list):
     '''
 
     # Import packages
-    import file_utils
+    from . import file_utils
 
     # Init variables
     no_files = len(in_list)
     i = 0
 
     # Iterate over list and delete S3 items
-    for f in in_list:
+    for in_f in in_list:
         try:
-            print 'attempting to delete %s from %s...' % (f, bucket.name)
-            k = bucket.get_key(f)
+            print 'attempting to delete %s from %s...' % (in_f, bucket.name)
+            k = bucket.get_key(in_f)
             k.delete()
         except AttributeError:
-            print 'No key found for %s on bucket %s' % (f, bucket.name)
+            print 'No key found for %s on bucket %s' % (in_f, bucket.name)
         # Increment counter and update percentage complete
         i += 1
         file_utils.print_loop_status(i, no_files)
@@ -191,7 +191,7 @@ def s3_download(bucket, in_list, local_prefix, bucket_prefix=''):
     '''
 
     # Import packages
-    import file_utils
+    from . import file_utils
     import os
 
     # Init variables
@@ -205,12 +205,12 @@ def s3_download(bucket, in_list, local_prefix, bucket_prefix=''):
         bucket_prefix = bucket_prefix + '/'
 
     # For each item in the list, try to download it
-    for f in in_list:
-        remote_filename = bucket.name + ': ' + f
+    for in_f in in_list:
+        remote_filename = bucket.name + ': ' + in_f
         if bucket_prefix:
-            local_filename = f.replace(bucket_prefix, local_prefix)
+            local_filename = in_f.replace(bucket_prefix, local_prefix)
         else:
-            local_filename = os.path.join(local_prefix, f)
+            local_filename = os.path.join(local_prefix, in_f)
         # Check to see if the local folder setup exists or not
         local_folders = os.path.dirname(local_filename)
         if not os.path.isdir(local_folders):
@@ -221,12 +221,12 @@ def s3_download(bucket, in_list, local_prefix, bucket_prefix=''):
             % (remote_filename, local_filename)
         try:
             if not os.path.exists(local_filename):
-                k = bucket.get_key(f)
+                k = bucket.get_key(in_f)
                 k.get_contents_to_filename(local_filename)
             else:
                 print 'File %s already exists, skipping...' % local_filename
         except AttributeError:
-            print 'No key found for %s on bucket %s' % (f, bucket.name)
+            print 'No key found for %s on bucket %s' % (in_f, bucket.name)
         # Increment counter and update percentage complete
         i += 1
         file_utils.print_loop_status(i, no_files)
@@ -264,7 +264,7 @@ def s3_upload(bucket, src_list, dst_list, make_public=False, overwrite=False):
     '''
 
     # Callback function for upload progress update
-    def callback(complete, total):
+    def callback():
         '''
         Method to illustrate file uploading and progress updates
         '''
@@ -277,13 +277,13 @@ def s3_upload(bucket, src_list, dst_list, make_public=False, overwrite=False):
         sys.stdout.flush()
 
     # Import packages
-    import file_utils
+    from . import file_utils
 
     # Init variables
     no_files = len(src_list)
     i = 0
 
-    # Check if the list lengths match 
+    # Check if the list lengths match
     if no_files != len(dst_list):
         raise RuntimeError, 'src_list and dst_list must be the same length!'
 

@@ -43,15 +43,16 @@ def setup_logger(logger_name, log_file, level, to_screen=False):
     formatter = logging.Formatter('%(asctime)s : %(message)s')
 
     # Write logs to file
-    fileHandler = logging.FileHandler(log_file)
-    fileHandler.setFormatter(formatter)
-    logger.addHandler(fileHandler)
+    file_handler = logging.FileHandler(log_file)
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
     # Write to screen, if desired
     if to_screen:
-        streamHandler = logging.StreamHandler()
-        streamHandler.setFormatter(formatter)
-        logger.addHandler(streamHandler)
+        stream_handler = logging.StreamHandler()
+        stream_handler.setFormatter(formatter)
+        logger.addHandler(stream_handler)
 
     # Return the logger
     return logger
+

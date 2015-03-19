@@ -4,7 +4,7 @@
 # Daniel Clark
 
 '''
-This module contains functions which return sensitive information from 
+This module contains functions which return sensitive information from
 a csv file, with regards to connection to AWS services.
 '''
 
@@ -46,7 +46,7 @@ def return_aws_keys(creds_path):
 
     # Return keys
     return aws_access_key_id,\
-           aws_secret_access_key,\
+           aws_secret_access_key
 
 
 # Function to return an AWS S3 bucket
@@ -216,3 +216,4 @@ def sql_alchemy_engine(creds_path):
 
     # Return it
     return engine
+

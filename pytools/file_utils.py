@@ -110,7 +110,7 @@ def gather_files(base_dir):
     # Collect files and filesizes
     for root, dirs, files in os.walk(base_dir):
         if files:
-            fp_list.extend([os.path.join(root,f) for f in files])
+            fp_list.extend([os.path.join(root, f) for f in files])
 
     # Return filepath list
     return fp_list
@@ -176,3 +176,4 @@ def print_loop_status(itr, full_len):
     # Print the percentage complete
     per = 100*(float(itr)/full_len)
     print '%d/%d\n%f%% complete' % (itr, full_len, per)
+

@@ -3,12 +3,12 @@
 # Author: Daniel Clark, 2014
 
 '''
-This module contains functions which perform various directory-based 
+This module contains functions which perform various directory-based
 correlation analysis.
 '''
 
 
-# Plot a dictionary of 
+# Plot a dictionary of
 def barplot_dict(in_dict):
     '''
     Method to read in a dictionary of label-number key-value pairs and
@@ -57,10 +57,10 @@ def nifti_corrs(dir1, dir2, filt_str=''):
         A dictionary with the filepath as the key and the correlation
         as the value
     dir1_only : list (str)
-        A list of the files that were only found in dir1 and not dir2, 
+        A list of the files that were only found in dir1 and not dir2,
         as such, no correlations were computed for these
     dir2_only : list (str)
-        A list of the files that were only found in dir2 and not dir1, 
+        A list of the files that were only found in dir2 and not dir1,
         as such, no correlations were computed for these
     '''
 
@@ -79,12 +79,12 @@ def nifti_corrs(dir1, dir2, filt_str=''):
     # Walk through each directory to create lists of nifti paths
     print 'Walking through %s...' % dir1
     for root, dirs, files in os.walk(dir1):
-        fp = [root + '/' + f for f in files if f.endswith('.nii.gz') and \
+        fp = [os.path.join(root, f) for f in files if f.endswith('.nii.gz') and \
                 (filt_str in root or filt_str in f)]
         dir1_niftis.extend(fp)
     print 'Walking through %s...' % dir2
     for root, dirs, files in os.walk(dir2):
-        fp = [root + '/' + f for f in files if f.endswith('.nii.gz') and \
+        fp = [os.path.join(root, f) for f in files if f.endswith('.nii.gz') and \
                 (filt_str in root or filt_str in f)]
         dir2_niftis.extend(fp)
 
@@ -120,8 +120,8 @@ def nifti_corrs(dir1, dir2, filt_str=''):
                 err = err + '\n%s has %d elements, %s has %d elements' \
                              % (dir1+f, len(arr1), dir2+f, len(arr2))
                 raise ValueError, err
-            R = np.corrcoef(arr1,arr2)
-            rval = R[0,1]
+            R = np.corrcoef(arr1, arr2)
+            rval = R[0, 1]
             corr_dict[f] = rval
             print 'Correlation: %f' % rval
         # Otherwise, append it to dir1_only list

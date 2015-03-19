@@ -7,8 +7,8 @@ The pytools package contains modules with various useful tools.
 '''
 
 # Import Python modules
-import aws_utils
-import dir_corrs
-import fetch_creds
-import file_utils
-import log_tools
+from . import aws_utils
+from . import dir_corrs
+from . import fetch_creds
+from . import file_utils
+from . import log_tools
