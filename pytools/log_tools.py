@@ -7,7 +7,6 @@ This module contains functions which help set up logging for python
 coding and scripts.
 '''
 
-
 # Setup log file
 def setup_logger(logger_name, log_file, level, to_screen=False):
     '''

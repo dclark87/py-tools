@@ -6,7 +6,6 @@
 This module has various utilities for handling file manipulation
 '''
 
-
 # Function to compress files in a directory
 def compress_files(base_dir, max_size, output_prefix):
     '''
