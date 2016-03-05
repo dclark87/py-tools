@@ -28,11 +28,52 @@ def check_unique_chars(input_str):
     chars_dict = {}
     is_unique = True
 
+    # Check input type
+    if not isinstance(input_str, str):
+        err_msg = 'Input: %s is not string!' % str(input_str)
+        raise TypeError(err_msg)
+
     # Iterate through string chars
     for char in input_str:
         if not chars_dict.has_key(char):
             chars_dict[char] = 1
         else:
+            is_unique = False
+            break
+
+    # Return flag
+    return is_unique
+
+def check_unique_chars2(input_str):
+    '''
+    Function to check if string is composed of all unique characters
+    using no other external data structures
+
+    Paramters
+    ---------
+    input_str : string
+        input string to test for unique-ness
+
+    Returns
+    -------
+    is_unique : boolean
+        flag indicating whether string is unique or not
+    '''
+
+    # Import packages
+
+    # Init variables
+    is_unique = True
+
+    # Check input type
+    if not isinstance(input_str, str):
+        err_msg = 'Input: %s is not string!' % str(input_str)
+        raise TypeError(err_msg)
+
+    # Iterate through string chars
+    for idx, char in enumerate(input_str):
+        rest_of_str = input_str[idx+1:]
+        if char in rest_of_str:
             is_unique = False
             break
 

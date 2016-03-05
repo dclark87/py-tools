@@ -17,7 +17,16 @@ class StringsTestCase(unittest.TestCase):
 
     # Set up test case
     def setUp(self):
-        pass
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        self.unique_str = 'abcdef'
+        self.unique_str_case = 'AaBbCc'
+        self.non_unique_str = 'abcab'
+        self.non_unique_str2 = 'a 2 cC.'
+        self.not_string = 123
 
     # Test unique chars function
     def test_check_unique_chars(self):
@@ -28,30 +37,62 @@ class StringsTestCase(unittest.TestCase):
         # Import packages
         from pytools.arrays_strings.strings import check_unique_chars
 
-        # Init variables
-        unique_str = 'abcdef'
-        unique_str_case = 'AaBbCc'
-        non_unique_str = 'abcab'
-        non_unique_str2 = 'a 2 cC.'
-
         # Assert unique_str
-        is_unique = check_unique_chars(unique_str)
+        is_unique = check_unique_chars(self.unique_str)
         err_msg = 'String %s is unique, should be True!'
-        self.assertTrue(is_unique, msg=err_msg % unique_str)
+        self.assertTrue(is_unique, msg=err_msg % self.unique_str)
 
-        # Assert unique_str
-        is_unique = check_unique_chars(unique_str_case)
-        self.assertTrue(is_unique, msg=err_msg % unique_str_case)
+        # Assert unique_str_case
+        is_unique = check_unique_chars(self.unique_str_case)
+        self.assertTrue(is_unique, msg=err_msg % self.unique_str_case)
 
-        # Assert unique_str
-        is_unique = check_unique_chars(non_unique_str)
+        # Assert non_unique_str
+        is_unique = check_unique_chars(self.non_unique_str)
         err_msg = 'String %s is not unique, should be False!'
-        self.assertFalse(is_unique, msg=err_msg % non_unique_str)
+        self.assertFalse(is_unique, msg=err_msg % self.non_unique_str)
+
+        # Assert non_unique_str2
+        is_unique = check_unique_chars(self.non_unique_str2)
+        self.assertFalse(is_unique, msg=err_msg % self.non_unique_str2)
+
+        # Assert non_unique_str
+        err_msg = 'Input %s is not string! Should raise exception' \
+                  % (str(self.not_string))
+        self.assertRaises(TypeError, check_unique_chars, self.not_string,
+                          msg=err_msg)
+
+    # Test unique chars function
+    def test_check_unique_chars2(self):
+        '''
+        Ensure check_unique_chars() is returning right results
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import check_unique_chars2
 
         # Assert unique_str
-        is_unique = check_unique_chars(non_unique_str2)
-        self.assertFalse(is_unique, msg=err_msg % non_unique_str2)
+        is_unique = check_unique_chars2(self.unique_str)
+        err_msg = 'String %s is unique, should be True!'
+        self.assertTrue(is_unique, msg=err_msg % self.unique_str)
 
+        # Assert unique_str_case
+        is_unique = check_unique_chars2(self.unique_str_case)
+        self.assertTrue(is_unique, msg=err_msg % self.unique_str_case)
+
+        # Assert non_unique_str
+        is_unique = check_unique_chars2(self.non_unique_str)
+        err_msg = 'String %s is not unique, should be False!'
+        self.assertFalse(is_unique, msg=err_msg % self.non_unique_str)
+
+        # Assert non_unique_str2
+        is_unique = check_unique_chars2(self.non_unique_str2)
+        self.assertFalse(is_unique, msg=err_msg % self.non_unique_str2)
+
+        # Assert non_unique_str
+        err_msg = 'Input %s is not string! Should raise exception' \
+                  % (str(self.not_string))
+        self.assertRaises(TypeError, check_unique_chars2, self.not_string,
+                          msg=err_msg)
 
 
 if __name__ == '__main__':
