@@ -44,13 +44,13 @@ class StringsTestCase(unittest.TestCase):
         self.assertTrue(is_unique, msg=err_msg % unique_str_case)
 
         # Assert unique_str
-        is_unique = check_unique_chars(unique_str)
+        is_unique = check_unique_chars(non_unique_str)
         err_msg = 'String %s is not unique, should be False!'
-        self.assertTrue(is_unique, msg=err_msg % non_unique_str)
+        self.assertFalse(is_unique, msg=err_msg % non_unique_str)
 
         # Assert unique_str
-        is_unique = check_unique_chars(unique_str)
-        self.assertTrue(is_unique, msg=err_msg % non_unique_str2)
+        is_unique = check_unique_chars(non_unique_str2)
+        self.assertFalse(is_unique, msg=err_msg % non_unique_str2)
 
 
 
