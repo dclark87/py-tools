@@ -11,6 +11,8 @@ def check_unique_chars(input_str):
     '''
     Function to check if string is composed of all unique characters
 
+    Time complexity: O(n)
+
     Paramters
     ---------
     input_str : string
@@ -49,6 +51,8 @@ def check_unique_chars2(input_str):
     Function to check if string is composed of all unique characters
     using no other external data structures
 
+    Time complexity: O(n^2)
+
     Paramters
     ---------
     input_str : string
@@ -79,3 +83,24 @@ def check_unique_chars2(input_str):
 
     # Return flag
     return is_unique
+
+
+def reverse_cstyle_str(input_str):
+    '''
+    Reverse a c-style string (ending in null char: '\0')
+    '''
+
+    # Import packges
+
+    # Init variables
+    str_length = len(input_str)-1 # Ignore null char
+    rev_str = '\0'
+
+    # Iterate through string from end to beginning
+    for idx in range(str_length):
+        rev_idx = str_length - idx - 1
+        rev_char = input_str[rev_idx]
+        rev_str = rev_str + rev_char
+
+    # Return reversed string
+    return rev_str

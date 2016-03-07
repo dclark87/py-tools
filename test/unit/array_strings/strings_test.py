@@ -64,7 +64,7 @@ class StringsTestCase(unittest.TestCase):
     # Test unique chars function
     def test_check_unique_chars2(self):
         '''
-        Ensure check_unique_chars() is returning right results
+        Ensure check_unique_chars2() is returning right results
         '''
 
         # Import packages
@@ -94,6 +94,22 @@ class StringsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, check_unique_chars2, self.not_string,
                           msg=err_msg)
 
+    def test_reverse_cstyle_str(self):
+        '''
+        Ensure that reverse_cstyle_str is returning correct results
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import reverse_cstyle_str
+
+        # Init variables
+        cstyle_str1 = 'abcd\0'
+        cstyel_str1_rev = cstyle_str1[::-1]
+
+        # Assert cstyle str1 is reversed
+        rev_str1 = reverse_cstyle_str(cstyle_str1)
+        err_msg = '%s is not reversed version of %s' % (rev_str1, cstyel_str1_rev)
+        self.assertEqual(cstyel_str1_rev, rev_str1, msg=err_msg)
 
 if __name__ == '__main__':
     unittest.main()
