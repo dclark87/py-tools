@@ -3,5 +3,5 @@
 # Author: Daniel Clark, 2016
 
 '''
-This module performs unit testing on the pytools/linked_lists module
+This module performs unit testing on the pytools/linked_lists sub-package
 '''

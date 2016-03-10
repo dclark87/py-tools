@@ -3,7 +3,7 @@
 # Author: Daniel Clark, 2016
 
 '''
-Unit test module to perform testing on linked_lists.py
+Unit test module to perform testing on linked_lists module
 '''
 
 # Import packages
@@ -12,7 +12,7 @@ import unittest
 
 class LinkedListsTestCase(unittest.TestCase):
     '''
-    TestCase for the linked_lists.py module
+    TestCase for the linked_lists module
     '''
 
     # Set up test case

@@ -1,4 +1,4 @@
-# linked_lists/linked_lists.py
+# pytools/linked_lists/linked_lists.py
 #
 # Author: Daniel Clark, 2016
 

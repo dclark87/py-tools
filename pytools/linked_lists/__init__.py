@@ -1,4 +1,4 @@
-# linked_lists/__init__.py
+# pytools/linked_lists/__init__.py
 #
 # Author: Daniel Clark
 
