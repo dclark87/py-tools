@@ -24,7 +24,6 @@ class StacksTestCase(unittest.TestCase):
         # Init instance attributes
         pass
 
-    # Test can create and insert a node
     def _assert_stack(self, stack):
         '''
         Perform testing of stack's instance methods and assert

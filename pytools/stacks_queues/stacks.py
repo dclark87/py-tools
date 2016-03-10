@@ -74,11 +74,16 @@ class NodeStack(object):
     Last in, first out (LIFO) queue of objects using Node class
     '''
 
-    def __init__(self, node=None):
+    def __init__(self, item=None):
         '''
         Init the Node-style stack
         '''
-        self.head = node
+
+        if item:
+            node = Node(item=item, next_node=None)
+            self.head = node
+        else:
+            self.head = None
 
     def pop(self):
         '''
