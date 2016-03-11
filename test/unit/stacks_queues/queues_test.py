@@ -93,6 +93,65 @@ class QueuesTestCase(unittest.TestCase):
         # Test instance methods
         self._assert_queue(node_queue)
 
+    def _assert_dequeue(self, dequeue):
+        '''
+        Assert the double-ended Queue objects function properly
+        '''
+
+        # Init variables
+        item1 = 42
+        item2 = 420
+        item3 = 4200
+        item4 = 12
+        item5 = 24
+
+        # Push and pop items from the de-queue
+        dequeue.add_to_head(item1)
+        dequeue.add_to_head(item2)
+        dequeue.add_to_tail(item3)
+        dequeue.add_to_tail(item4)
+        dequeue.add_to_head(item5)
+
+        popped_item5 = dequeue.pop_from_head()
+        popped_item4 = dequeue.pop_from_tail()
+        popped_item2 = dequeue.pop_from_head()
+        popped_item3 = dequeue.pop_from_tail()
+        popped_item1 = dequeue.pop_from_tail()
+
+        err_msg = 'Popped item: %d does not equal pushed item: %d'
+        self.assertEqual(popped_item1, item1, msg=err_msg % (popped_item1, item1))
+        self.assertEqual(popped_item2, item2, msg=err_msg % (popped_item2, item2))
+        self.assertEqual(popped_item3, item3, msg=err_msg % (popped_item3, item3))
+        self.assertEqual(popped_item4, item4, msg=err_msg % (popped_item4, item4))
+        self.assertEqual(popped_item5, item5, msg=err_msg % (popped_item5, item5))
+
+    def test_listdequeue(self):
+        '''
+        Test the Python list-based Dequeue
+        '''
+
+        # Import packages
+        from pytools.stacks_queues import queues
+
+        # Init empty dequeue
+        list_dequeue = queues.ListDequeue()
+
+        # Test instance methods
+        self._assert_dequeue(list_dequeue)
+
+    def test_nodedequeue(self):
+        '''
+        Test the Node-implemented Dequeue 
+        '''
+        # Import packages
+        from pytools.stacks_queues import queues
+
+        # Init empty dequeue
+        node_dequeue = queues.NodeDequeue()
+
+        # Test instance methods
+        self._assert_dequeue(node_dequeue)
+
 
 if __name__ == '__main__':
     unittest.main()
