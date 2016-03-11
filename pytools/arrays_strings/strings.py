@@ -24,16 +24,14 @@ def check_unique_chars(input_str):
         flag indicating whether string is unique or not
     '''
 
-    # Import packages
-
-    # Init variables
-    chars_dict = {}
-    is_unique = True
-
     # Check input type
     if not isinstance(input_str, str):
         err_msg = 'Input: %s is not string!' % str(input_str)
         raise TypeError(err_msg)
+
+    # Init variables
+    chars_dict = {}
+    is_unique = True
 
     # Iterate through string chars
     for char in input_str:
@@ -64,15 +62,13 @@ def check_unique_chars2(input_str):
         flag indicating whether string is unique or not
     '''
 
-    # Import packages
-
-    # Init variables
-    is_unique = True
-
     # Check input type
     if not isinstance(input_str, str):
         err_msg = 'Input: %s is not string!' % str(input_str)
         raise TypeError(err_msg)
+
+    # Init variables
+    is_unique = True
 
     # Iterate through string chars
     for idx, char in enumerate(input_str):
@@ -88,9 +84,22 @@ def check_unique_chars2(input_str):
 def reverse_cstyle_str(input_str):
     '''
     Reverse a c-style string (ending in null char: '\0')
+
+    Parameters
+    ----------
+    input_str : string
+        the c-style string to reverse and return
+
+    Returns
+    -------
+    rev_str : string
+        the reversed input string
     '''
 
-    # Import packges
+    # Check input type
+    if not isinstance(input_str, str):
+        err_msg = 'Input: %s is not string!' % str(input_str)
+        raise TypeError(err_msg)
 
     # Init variables
     str_length = len(input_str)-1 # Ignore null char
@@ -104,3 +113,33 @@ def reverse_cstyle_str(input_str):
 
     # Return reversed string
     return rev_str
+
+
+def remove_dup_chars(input_str):
+    '''
+    Remove all duplicate characters while preserving input_str order
+
+    Parameters
+    ----------
+    input_str : string
+        input string to remove dups from
+
+    Returns
+    -------
+    input_str : string
+        the input string without duplicate chars
+    '''
+
+    # Check input type
+    if not isinstance(input_str, str):
+        err_msg = 'Input: %s is not string!' % str(input_str)
+        raise TypeError(err_msg)
+
+    # Iterate through input
+    for idx, char in enumerate(input_str):
+        if char in input_str[idx+1:]:
+            input_str = input_str[:idx+1] + \
+                        input_str[idx+1:].replace(char, '')
+
+    # Return input_str
+    return input_str

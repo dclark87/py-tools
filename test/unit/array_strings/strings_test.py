@@ -96,7 +96,7 @@ class StringsTestCase(unittest.TestCase):
 
     def test_reverse_cstyle_str(self):
         '''
-        Ensure that reverse_cstyle_str is returning correct results
+        Ensure that reverse_cstyle_str() is working properly
         '''
 
         # Import packages
@@ -105,11 +105,51 @@ class StringsTestCase(unittest.TestCase):
         # Init variables
         cstyle_str1 = 'abcd\0'
         cstyel_str1_rev = cstyle_str1[::-1]
+        cstyle_str2 = 'dcbabcd\0'
+        cstyel_str2_rev = cstyle_str2[::-1]
 
         # Assert cstyle str1 is reversed
         rev_str1 = reverse_cstyle_str(cstyle_str1)
         err_msg = '%s is not reversed version of %s' % (rev_str1, cstyel_str1_rev)
         self.assertEqual(cstyel_str1_rev, rev_str1, msg=err_msg)
 
+        # Assert cstyle str1 is reversed
+        rev_str2 = reverse_cstyle_str(cstyle_str2)
+        err_msg = '%s is not reversed version of %s' % (rev_str2, cstyel_str2_rev)
+        self.assertEqual(cstyel_str2_rev, rev_str2, msg=err_msg)
+
+    def test_remove_dup_chars(self):
+        '''
+        Ensure that remove_dup_chars() is working properly
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import remove_dup_chars
+
+        # Init variables
+        dup_str1 = 'aZzqrsqtss'
+        dup_str1_unique = ''.join(sorted(set(dup_str1), key=dup_str1.index))
+        dup_str2 = 'abababababa'
+        dup_str2_unique = ''.join(sorted(set(dup_str2), key=dup_str2.index))
+        dup_str3 = 'aZaa'
+        dup_str3_unique = ''.join(sorted(set(dup_str3), key=dup_str3.index))
+
+        non_dup_str1 = remove_dup_chars(dup_str1)
+        err_msg = '%s did not remove duplicates from input %s' \
+                  % (non_dup_str1, dup_str1)
+        self.assertEqual(dup_str1_unique, non_dup_str1, msg=err_msg)
+
+        non_dup_str2 = remove_dup_chars(dup_str2)
+        err_msg = '%s did not remove duplicates from input %s' \
+                  % (non_dup_str2, dup_str2)
+        self.assertEqual(dup_str2_unique, non_dup_str2, msg=err_msg)
+
+        non_dup_str3 = remove_dup_chars(dup_str3)
+        err_msg = '%s did not remove duplicates from input %s' \
+                  % (non_dup_str3, dup_str3)
+        self.assertEqual(dup_str3_unique, non_dup_str3, msg=err_msg)
+
+
+# Run unittests via main executable
 if __name__ == '__main__':
     unittest.main()

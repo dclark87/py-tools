@@ -15,9 +15,7 @@ class ListQueue(object):
         '''
         init Queue instance
         '''
-
         self.items = []
-
         if item:
             self.items.append(item)
 
@@ -25,28 +23,24 @@ class ListQueue(object):
         '''
         insert item into queue
         '''
-
         self.items.insert(0, item)
 
     def dequeue(self):
         '''
         return oldest item from queue
         '''
-
         return self.items.pop()
 
     def size(self):
         '''
         Get size of queue
         '''
-
         return len(self.items)
 
     def is_empty(self):
         '''
         check if queue is empty
         '''
-
         return len(self.items) == 0
 
 
@@ -59,7 +53,6 @@ class Node(object):
         '''
         init the Node instance
         '''
-
         self._item = item
         self._prev_node = prev_node
 
