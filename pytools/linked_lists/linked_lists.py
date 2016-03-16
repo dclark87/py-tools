@@ -1,6 +1,7 @@
 # pytools/linked_lists/linked_lists.py
 #
 # Author: Daniel Clark, 2016
+from numpy import place
 
 '''
 This module contains functions to solve problems related to linked
@@ -9,6 +10,7 @@ lists
 
 class Node(object):
     '''
+    Node for use in LinkedList class
     '''
 
     def __init__(self, data=None, next_node=None):
@@ -30,6 +32,7 @@ class Node(object):
 
 class LinkedList(object):
     '''
+    Linked list class (singly-linked)
     '''
 
     def __init__(self, head=None):
@@ -115,3 +118,21 @@ class LinkedList(object):
         # Otherwise, set prev_node's next to current's next
         else:
             prev_node.set_next(current_node.get_next())
+
+    def reverse(self):
+        '''
+        Reverse linked list (self) in place
+        '''
+
+        # Get head node and set its next to None
+        curr_node = self.head
+        next_node = curr_node.get_next()
+        curr_node.set_next(None)
+
+        while next_node:
+            tmp = next_node.get_next()
+            next_node.set_next(curr_node)
+            curr_node = next_node
+            next_node = tmp
+
+        self.head = curr_node
