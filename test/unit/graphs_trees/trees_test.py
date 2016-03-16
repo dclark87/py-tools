@@ -10,9 +10,9 @@ Unit test module to perform testing on the trees module
 import unittest
 
 
-class TreesTestCase(unittest.TestCase):
+class BinaryTreeTestCase(unittest.TestCase):
     '''
-    TestCase for the trees module
+    TestCase for the BinaryTree class from the trees.py module
     '''
 
     # Set up test case
@@ -98,6 +98,82 @@ class TreesTestCase(unittest.TestCase):
         self.assertEqual(found_val1, value1, msg=err_msg % (found_val1, value1))
         self.assertEqual(found_val2, value2, msg=err_msg % (found_val2, value2))
         self.assertEqual(found_val3, value3, msg=err_msg % (found_val3, value3))
+
+
+class TrieTestCase(unittest.TestCase):
+    '''
+    TestCase for the Trie class from the trees.py module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        pass
+
+    def test_insert_retrieve(self):
+        '''
+        Test we can insert and retrieve strings into Trie properly
+        '''
+
+        # Import packages
+        from pytools.graphs_trees import trees
+
+        # Init trie object
+        trie = trees.Trie()
+
+        # Insert several strings
+        trie.insert('hello')
+        trie.insert('howdy')
+        trie.insert('panda')
+        trie.insert('polarbear')
+        trie.insert('polar')
+        trie.insert('hell')
+        trie.insert('helsinki')
+
+        # Retrieve a few unique strings
+        err_msg = 'Retrieval returned: %s, expected: %s'
+        howdy = trie.retrieve('howdy')
+        self.assertEqual(howdy, 'howdy', msg=err_msg % (howdy, 'howdy'))
+
+        panda = trie.retrieve('panda')
+        self.assertEqual(panda, 'panda', msg=err_msg % (panda, 'panda'))
+
+        # Retrieve strings with multiple options
+        polar, polarbear = trie.retrieve('polar')
+        self.assertEqual(polar, 'polar', msg=err_msg % (polar, 'polar'))
+        self.assertEqual(polarbear, 'polarbear',
+                         msg=err_msg % (polarbear, 'polarbear'))
+
+        hell, hello, helsinki = trie.retrieve('hel')
+        self.assertEqual(hell, 'hell', msg=err_msg % (hell, 'hell'))
+        self.assertEqual(hello, 'hello', msg=err_msg % (hello, 'hello'))
+        self.assertEqual(helsinki, 'helsinki', msg=err_msg % (helsinki, 'helsinki'))
+
+    def test_print_contents(self):
+        '''
+        Print for visual inspection
+        '''
+
+        # Import packages
+        from pytools.graphs_trees import trees
+
+        # Init trie object
+        trie = trees.Trie()
+
+        # Insert several strings
+        trie.insert('jack')
+        trie.insert('jill')
+        trie.insert('dan')
+        trie.insert('daniel')
+        trie.insert('danielle')
+
+        # Print contents
+        trie.print_contents()
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -100,3 +100,71 @@ class BinaryTree(object):
                     value = child.find_rootval(rootval)
                     if value:
                         return child
+
+
+class Trie(object):
+    '''
+    Trie tree data structure
+    '''
+
+    def __init__(self, char=None, child=None, is_leaf=False):
+        '''
+        Init Trie structure
+        '''
+
+        # Test for valid input
+        if char:
+            if not (isinstance(char, str) and len(char) == 1):
+                err_msg = 'Input char: %s must be a string of length 1!' % str(char)
+                raise ValueError(err_msg)
+
+        # Populate contents
+        self.char = char
+        if not child:
+            self.children = []
+        else:
+            self.children = [child]
+        self.is_leaf = is_leaf
+
+    def insert(self, string):
+        '''
+        Insert string into Trie
+        '''
+
+        # Get first char of input string
+        prefix = string[0]
+        # Iterate through self.children to see if need to insert new sub-trie
+        insert_child = True
+        for child in self.children:
+            if child.char == prefix:
+                insert_child = False
+                break
+        # If sub-trie with char wasnt found, create and insert
+        if insert_child:
+            child = Trie(prefix)
+            self.children.append(child)
+        # If there is more of string to populate trie with, recursively call
+        # insert on sub-trie
+        if len(string) > 1:
+            suffix = string[1:]
+            child.insert(suffix)
+        # If this is final char of input string, mark as a leaf node
+        else:
+            child.is_leaf = True
+
+    def retrieve(self, string):
+        '''
+        Retrieve string based on a string or partial string
+        '''
+        
+
+    def print_contents(self):
+        '''
+        Print Trie object for visualization
+        '''
+
+        if len(self.children) > 0:
+            print '%s -> %s' \
+            % (self.char, str([(ch.char, ch.is_leaf) for ch in self.children]))
+        for child in self.children:
+            child.print_contents()
