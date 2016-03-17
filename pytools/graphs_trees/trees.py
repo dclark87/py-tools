@@ -107,7 +107,7 @@ class Trie(object):
     Trie tree data structure
     '''
 
-    def __init__(self, char=None, child=None, is_leaf=False):
+    def __init__(self, char='', child=None, is_leaf=False):
         '''
         Init Trie structure
         '''
@@ -154,9 +154,40 @@ class Trie(object):
 
     def retrieve(self, string):
         '''
-        Retrieve string based on a string or partial string
+        Retrieve shortest matching word entry based on a prefix;
+        prefix can be partial word or full word
         '''
-        
+
+        # Init variables
+        sub_char = ''
+        if len(string) > 0:
+            char = string[0]
+        else:
+            char = None
+
+        # Iterate through current trie's children
+        for child in self.children:
+            # If char is defined, see if it matches
+            if char:
+                if child.char == char:
+                    if child.is_leaf and len(string) == 1:
+                        sub_char = child.char
+                        break
+                    else:
+                        sub_char = child.retrieve(string[1:])
+            elif child.is_leaf:
+                sub_char = child.char
+                break
+            else:
+                sub_char = child.retrieve('')
+
+        if sub_char == '':
+            raise KeyError('Prefix not in Trie!')
+
+        # Return current trie char + sub_chars found
+        return self.char + sub_char
+
+        #raise KeyError('string: "%s" not found in trie!' % string)
 
     def print_contents(self):
         '''
