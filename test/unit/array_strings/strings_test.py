@@ -149,6 +149,36 @@ class StringsTestCase(unittest.TestCase):
                   % (non_dup_str3, dup_str3)
         self.assertEqual(dup_str3_unique, non_dup_str3, msg=err_msg)
 
+    def test_remove_dup_chars2(self):
+        '''
+        Ensure that remove_dup_chars2() is working properly
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import remove_dup_chars2
+
+        # Init variables
+        dup_str1 = 'aZzqrsqtss'
+        dup_str1_unique = ''.join(sorted(set(dup_str1), key=dup_str1.index))
+        dup_str2 = 'abababababa'
+        dup_str2_unique = ''.join(sorted(set(dup_str2), key=dup_str2.index))
+        dup_str3 = 'aZaa'
+        dup_str3_unique = ''.join(sorted(set(dup_str3), key=dup_str3.index))
+
+        non_dup_str1 = remove_dup_chars2(dup_str1)
+        err_msg = '%s did not remove duplicates from input %s' \
+                  % (non_dup_str1, dup_str1)
+        self.assertEqual(dup_str1_unique, non_dup_str1, msg=err_msg)
+
+        non_dup_str2 = remove_dup_chars2(dup_str2)
+        err_msg = '%s did not remove duplicates from input %s' \
+                  % (non_dup_str2, dup_str2)
+        self.assertEqual(dup_str2_unique, non_dup_str2, msg=err_msg)
+
+        non_dup_str3 = remove_dup_chars2(dup_str3)
+        err_msg = '%s did not remove duplicates from input %s' \
+                  % (non_dup_str3, dup_str3)
+        self.assertEqual(dup_str3_unique, non_dup_str3, msg=err_msg)
 
 # Run unittests via main executable
 if __name__ == '__main__':

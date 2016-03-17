@@ -143,3 +143,46 @@ def remove_dup_chars(input_str):
 
     # Return input_str
     return input_str
+
+
+def remove_dup_chars2(input_str):
+    '''
+    Remove all duplicate characters while presering input_str order;
+    this method does not use the python replace() function
+
+    Parameters
+    ----------
+    input_str : string
+        input string to remove dups from
+
+    Returns
+    -------
+    input_str : string
+        the input string without duplicate chars
+    '''
+
+    # Init variables
+    itr = 0
+    chk = 1 
+
+    # While checker is still in string
+    while chk < len(input_str):
+        # Iterate through all chars before checker adn compare
+        while itr < chk:
+            # If there's a match, omit chk char from new string
+            if input_str[itr] == input_str[chk]:
+                if chk == len(input_str)-1:
+                    input_str = input_str[:chk]
+                    break
+                else:
+                    input_str = input_str[:chk] + input_str[chk+1:]
+                itr = 0
+            # Otherwise, check next itr char
+            else:
+                itr += 1
+        # Iterator made it to checker, increment checker and reset iterator
+        chk += 1
+        itr = 0
+
+    # Return unique'd string
+    return input_str
