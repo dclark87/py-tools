@@ -142,16 +142,26 @@ class TrieTestCase(unittest.TestCase):
         panda = trie.retrieve('panda')
         self.assertEqual(panda, 'panda', msg=err_msg % (panda, 'panda'))
 
-        # Retrieve strings with multiple options
-        polar, polarbear = trie.retrieve('polar')
-        self.assertEqual(polar, 'polar', msg=err_msg % (polar, 'polar'))
+        # Retrieve strings with only prefixes
+        polarbear = trie.retrieve('polarb')
         self.assertEqual(polarbear, 'polarbear',
                          msg=err_msg % (polarbear, 'polarbear'))
-
-        hell, hello, helsinki = trie.retrieve('hel')
+ 
+        hell = trie.retrieve('hel')
         self.assertEqual(hell, 'hell', msg=err_msg % (hell, 'hell'))
+
+        # Retrieve full word that is also a prefix
+        hell = trie.retrieve('hell')
+        self.assertEqual(hell, 'hell', msg=err_msg % (hell, 'hell'))
+        # Retrieve hello too
+        hello = trie.retrieve('hello')
         self.assertEqual(hello, 'hello', msg=err_msg % (hello, 'hello'))
+        # Retrieve helsinki via prefix
+        helsinki = trie.retrieve('hels')
         self.assertEqual(helsinki, 'helsinki', msg=err_msg % (helsinki, 'helsinki'))
+
+        # Assert that a KeyError is raised for non-existent prefix
+        self.assertRaises(KeyError, trie.retrieve, 'helb')
 
     def test_print_contents(self):
         '''
