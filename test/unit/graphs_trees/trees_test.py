@@ -163,7 +163,7 @@ class TrieTestCase(unittest.TestCase):
         # Assert that a KeyError is raised for non-existent prefix
         self.assertRaises(KeyError, trie.retrieve, 'helb')
 
-    def tiest_print_contents(self):
+    def test_print_contents(self):
         '''
         Print for visual inspection
         '''

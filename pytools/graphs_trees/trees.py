@@ -1,6 +1,7 @@
 # pytools/graphs_trees/trees.py
 #
 # Author: Daniel Clark, 2016
+from conda.instructions import PREFIX
 
 '''
 This module contains functions to solve problems related to graphs and
@@ -152,7 +153,7 @@ class Trie(object):
         else:
             child.is_leaf = True
 
-    def retrieve(self, string):
+    def retrieve(self, prefix):
         '''
         Retrieve shortest matching word entry based on a prefix;
         prefix can be partial word or full word
@@ -160,34 +161,37 @@ class Trie(object):
 
         # Init variables
         sub_char = ''
-        if len(string) > 0:
-            char = string[0]
-        else:
-            char = None
 
         # Iterate through current trie's children
         for child in self.children:
-            # If char is defined, see if it matches
-            if char:
+            # If still parsing prefix
+            if len(prefix) > 0:
+                char = prefix[0]
+                # As long as sub trie char matches
                 if child.char == char:
-                    if child.is_leaf and len(string) == 1:
+                    # If the child is a lead and it's the last char of
+                    # prefix, return
+                    if child.is_leaf and len(prefix) == 1:
                         sub_char = child.char
                         break
+                    # Otherwise keep retrieving with rest of prefix
                     else:
-                        sub_char = child.retrieve(string[1:])
+                        sub_char = child.retrieve(prefix[1:])
+            # If we're past end of prefix and found leaf, return
             elif child.is_leaf:
                 sub_char = child.char
                 break
+            # Else we're past end of prefix, keep retrieving
             else:
                 sub_char = child.retrieve('')
 
+        # If made it through, char in prefix couldn't find match
         if sub_char == '':
-            raise KeyError('Prefix not in Trie!')
+            raise KeyError('Prefix ending in: "..%s" not in Trie!' \
+                           % (self.char + prefix))
 
         # Return current trie char + sub_chars found
         return self.char + sub_char
-
-        #raise KeyError('string: "%s" not found in trie!' % string)
 
     def print_contents(self):
         '''
