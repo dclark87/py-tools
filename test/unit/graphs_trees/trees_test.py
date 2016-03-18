@@ -58,9 +58,9 @@ class BinaryTreeTestCase(unittest.TestCase):
         binary_tree = trees.BinaryTree('d')
 
         # Insert e subtree
-        binary_tree.insert_left('e')
+        binary_tree.insert_right('e')
         # Insert f subtree
-        binary_tree.insert_left(value='f', rootval='e')
+        binary_tree.insert_right(value='f', rootval='e')
 
         # Get the e subtree
         e_subtree = binary_tree.find_rootval('e')
