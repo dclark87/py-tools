@@ -40,7 +40,7 @@ class LinkedListsTestCase(unittest.TestCase):
 
         # Assert head of linked_list has data
         head_node = linked_list.head
-        head_data = head_node.get_data()
+        head_data = head_node.data
         err_msg = 'node_data: %d does not equal head_data: %d' \
                    % (2, head_data)
         self.assertEqual(2, head_data, msg=err_msg)
@@ -88,7 +88,7 @@ class LinkedListsTestCase(unittest.TestCase):
         node = linked_list.head
         for char in node_data:
             self.assertEqual(node.data, char)
-            node = node.get_next()
+            node = node.next_node
 
         self.assertIsNone(node)
 

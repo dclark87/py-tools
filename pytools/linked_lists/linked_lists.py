@@ -1,7 +1,6 @@
 # pytools/linked_lists/linked_lists.py
 #
 # Author: Daniel Clark, 2016
-from numpy import place
 
 '''
 This module contains functions to solve problems related to linked
@@ -14,20 +13,24 @@ class Node(object):
     '''
 
     def __init__(self, data=None, next_node=None):
-        self.data = data
-        self.next_node = next_node
+        self._data = data
+        self._next_node = next_node
 
-    def get_data(self):
-        return self.data
+    @property
+    def data(self):
+        return self._data
 
-    def set_data(self, data):
-        self.data = data
+    @data.setter
+    def data(self, data):
+        self._data = data
 
-    def get_next(self):
-        return self.next_node
+    @property
+    def next_node(self):
+        return self._next_node
 
-    def set_next(self, new_next_node):
-        self.next_node = new_next_node
+    @next_node.setter
+    def next_node(self, new_next):
+        self._next_node = new_next
 
 
 class LinkedList(object):
@@ -39,8 +42,6 @@ class LinkedList(object):
         '''
         Init list head
         '''
-
-        # Point head of list
         self.head = head
 
     def insert(self, data):
@@ -64,7 +65,7 @@ class LinkedList(object):
         # Iterate through list until we get None
         while current_node:
             count += 1
-            current_node = current_node.get_next()
+            current_node = current_node.next_node
 
         # Return total count
         return count
@@ -80,10 +81,10 @@ class LinkedList(object):
 
         # Parse through list
         while current_node and not found:
-            if current_node.get_data() == data:
+            if current_node.data == data:
                 found = True
             else:
-                current_node = current_node.get_next()
+                current_node = current_node.next_node
 
         # Node containing data is not in list
         if current_node is None:
@@ -103,21 +104,21 @@ class LinkedList(object):
 
         # Parse through list
         while current_node and not found:
-            if current_node.get_data() == data:
+            if current_node.data == data:
                 found = True
             else:
                 prev_node = current_node
-                current_node = current_node.get_next()
+                current_node = current_node.next_node
 
         # Node containing data is not in list
         if not current_node:
             raise ValueError('node not found containing data: %s' % str(data))
         # If prev_node stays None, data was in head - set to current's next
         if not prev_node:
-            self.head = current_node.get_next()
+            self.head = current_node.next_node
         # Otherwise, set prev_node's next to current's next
         else:
-            prev_node.set_next(current_node.get_next())
+            prev_node.next_node = current_node.next_node
 
     def reverse(self):
         '''
@@ -126,12 +127,12 @@ class LinkedList(object):
 
         # Get head node and set its next to None
         curr_node = self.head
-        next_node = curr_node.get_next()
-        curr_node.set_next(None)
+        next_node = curr_node.next_node
+        curr_node.next_node = None
 
         while next_node:
-            tmp = next_node.get_next()
-            next_node.set_next(curr_node)
+            tmp = next_node.next_node
+            next_node.next_node = curr_node
             curr_node = next_node
             next_node = tmp
 

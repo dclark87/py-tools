@@ -2,6 +2,7 @@
 #
 # Author: Daniel Clark, 2016
 from conda.instructions import PREFIX
+from ldb import Tree
 
 '''
 This module contains functions to solve problems related to graphs and
@@ -203,3 +204,82 @@ class Trie(object):
             % (self.char, str([(ch.char, ch.is_leaf) for ch in self.children]))
         for child in self.children:
             child.print_contents()
+
+
+class BinarySearchTree(object):
+    '''
+    Binary Search Tree class implementation where each node in the
+    tree contains a key-value pair and an optional left child and
+    right child. left_child.key < parent; right_child.key > parent
+    '''
+
+    def __init__(self, key, value):
+        '''
+        Init tree or sub-tree
+        '''
+        self._key = key
+        self._value = value
+        self._left_child = None
+        self._right_child = None
+
+    def get_left_child(self):
+        '''
+        Return left child sub-tree
+        '''
+        return self._left_child
+
+    def get_right_child(self):
+        '''
+        Return right child sub-tree
+        '''
+        return self._right_child
+
+    def set_left_child(self):
+        '''
+        Return left child sub-tree
+        '''
+        return self._left_child
+
+    def set_right_child(self):
+        '''
+        Return right child sub-tree
+        '''
+        return self._right_child
+
+    def get_key(self):
+        '''
+        Getter for returning key
+        '''
+        return self._key
+
+    def get_value(self):
+        '''
+        Getter for returning value
+        '''
+        return self._value
+
+    def set_key(self, key):
+        '''
+        Setter for key
+        '''
+        self._key = key
+
+    def set_value(self, value):
+        '''
+        Setter for value
+        '''
+        self._value = value
+
+    def insert(self, key, value):
+        '''
+        Insert new key-value subtree into Tree
+        '''
+
+        # Check key is integer
+        if not (isinstance(key, int) or isinstance(key, float)):
+            err_msg = 'Key: "%s" must be an integer or float!' % (str(key))
+            raise KeyError(err_msg)
+
+        # Is key < current key
+        if key < self.get_left_child().key:
+            
