@@ -1,8 +1,7 @@
 # pytools/graphs_trees/trees.py
 #
 # Author: Daniel Clark, 2016
-from conda.instructions import PREFIX
-from ldb import Tree
+from __builtin__ import True
 
 '''
 This module contains functions to solve problems related to graphs and
@@ -217,58 +216,11 @@ class BinarySearchTree(object):
         '''
         Init tree or sub-tree
         '''
-        self._key = key
-        self._value = value
-        self._left_child = None
-        self._right_child = None
-
-    def get_left_child(self):
-        '''
-        Return left child sub-tree
-        '''
-        return self._left_child
-
-    def get_right_child(self):
-        '''
-        Return right child sub-tree
-        '''
-        return self._right_child
-
-    def set_left_child(self):
-        '''
-        Return left child sub-tree
-        '''
-        return self._left_child
-
-    def set_right_child(self):
-        '''
-        Return right child sub-tree
-        '''
-        return self._right_child
-
-    def get_key(self):
-        '''
-        Getter for returning key
-        '''
-        return self._key
-
-    def get_value(self):
-        '''
-        Getter for returning value
-        '''
-        return self._value
-
-    def set_key(self, key):
-        '''
-        Setter for key
-        '''
-        self._key = key
-
-    def set_value(self, value):
-        '''
-        Setter for value
-        '''
-        self._value = value
+        self.key = key
+        self.value = value
+        self.left_child = None
+        self.right_child = None
+        self.parent = None
 
     def insert(self, key, value):
         '''
@@ -280,6 +232,66 @@ class BinarySearchTree(object):
             err_msg = 'Key: "%s" must be an integer or float!' % (str(key))
             raise KeyError(err_msg)
 
-        # Is key < current key
-        if key < self.get_left_child().key:
-            
+        # If key < current key, insert left
+        if key < self.key:
+            if self.left_child:
+                self.left_child.insert(key, value)
+            else:
+                self.left_child = BinarySearchTree(key, value)
+        # If key > current key, insert right
+        elif key > self.key:
+            if self.right_child:
+                self.right_child.insert(key, value)
+            else:
+                self.right_child = BinarySearchTree(key, value)
+        # Key == current key, replace
+        else:
+            self.value = value
+
+    def __setitem__(self, key, value):
+        '''
+        Allow assignment via [] operator
+        '''
+        self.insert(key, value)
+
+    def retrieve(self, key):
+        '''
+        Find tree node value using specified key
+        '''
+
+        # Check key is integer
+        if not (isinstance(key, int) or isinstance(key, float)):
+            err_msg = 'Key: "%s" must be an integer or float!' % (str(key))
+            raise KeyError(err_msg)
+
+        # If key < current key, check left child
+        if key < self.key:
+            if not self.left_child:
+                return None
+            else:
+                return self.left_child.retrieve(key)
+        # If key > current key, check right child
+        elif key > self.key:
+            if not self.right_child:
+                return None
+            else:
+                return self.right_child.retrieve(key)
+        # Key == current key, return value
+        else:
+            return self.value
+
+
+    def __getitem__(self, key):
+        '''
+        Allow access via [] operator
+        '''
+        return self.retrieve(key)
+
+    def __contains__(self, key):
+        '''
+        Enable the "in" operator
+        '''
+        if self.retrieve(key):
+            return True
+        else:
+            return False

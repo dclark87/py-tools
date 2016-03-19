@@ -163,7 +163,7 @@ class TrieTestCase(unittest.TestCase):
         # Assert that a KeyError is raised for non-existent prefix
         self.assertRaises(KeyError, trie.retrieve, 'helb')
 
-    def test_print_contents(self):
+    def _print_contents(self):
         '''
         Print for visual inspection
         '''
@@ -183,6 +183,64 @@ class TrieTestCase(unittest.TestCase):
 
         # Print contents
         trie.print_contents()
+
+
+class BinarySearchTreeTestCase(unittest.TestCase):
+    '''
+    TestCase for the BinarySearchTree class from the trees.py module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        pass
+
+    def test_insert_retrieve(self):
+        '''
+        Test the BST insert function
+        '''
+
+        # Import packages
+        from pytools.graphs_trees import trees
+
+        # Init variables
+        kv1 = (32, '32')
+        kv2 = (12, '12')
+        kv3 = (72, '72')
+        kv4 = (21, '21')
+        kv5 = (100, '100')
+        kv6 = (3.14, 'pi')
+
+        # Init tree and insert
+        binary_search_tree = trees.BinarySearchTree(*kv1)
+        binary_search_tree.insert(*kv2)
+        binary_search_tree.insert(*kv3)
+        binary_search_tree.insert(*kv4)
+        binary_search_tree.insert(*kv5)
+        binary_search_tree[kv6[0]] = kv6[1]
+
+        # And retrieve values
+        val1 = binary_search_tree.retrieve(kv1[0])
+        self.assertEqual(val1, kv1[1])
+        val2 = binary_search_tree.retrieve(kv2[0])
+        self.assertEqual(val2, kv2[1])
+        val4 = binary_search_tree[kv4[0]]
+        self.assertEqual(val4, kv4[1])
+        val3in = kv3[0] in binary_search_tree
+        self.assertTrue(val3in)
+        val5 = binary_search_tree[kv5[0]]
+        self.assertEqual(val5, kv5[1])
+
+        # Try retrieving, overwrite, and retrieve again
+        pi = binary_search_tree.retrieve(kv6[0])
+        self.assertEqual(pi, kv6[1])
+        binary_search_tree[kv6[0]] = '3.14'
+        pi = binary_search_tree[kv6[0]]
+        self.assertEqual(pi, '3.14')
 
 
 if __name__ == '__main__':
