@@ -197,51 +197,118 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         '''
 
         # Init instance attributes
-        pass
+        self.kv1 = (32, '32')
+        self.kv2 = (12, '12')
+        self.kv3 = (72, '72')
+        self.kv4 = (21, '21')
+        self.kv5 = (100, '100')
+        self.kv6 = (3.14, 'pi')
+        self.kv7 = (99, 'red balloons')
+        self.kv8 = (98, '98')
+        self.kv9 = (101, 'dalmations')
+        self.kv10 = (25, 'cents')
+
+    def _populate_bst(self):
+        '''
+        Populate the BST
+        '''
+
+        # Import packages
+        from pytools.graphs_trees import trees
+
+        # Init tree and insert
+        binary_search_tree = trees.BinarySearchTree(*self.kv1)
+        binary_search_tree.insert(*self.kv2)
+        binary_search_tree.insert(*self.kv3)
+        binary_search_tree.insert(*self.kv4)
+        binary_search_tree.insert(*self.kv5)
+        binary_search_tree[self.kv6[0]] = self.kv6[1]
+        binary_search_tree[self.kv7[0]] = self.kv7[1]
+        binary_search_tree[self.kv8[0]] = self.kv8[1]
+        binary_search_tree[self.kv9[0]] = self.kv9[1]
+        binary_search_tree[self.kv10[0]] = self.kv10[1]
+
+        # Return BST populated
+        return binary_search_tree
 
     def test_insert_retrieve(self):
         '''
         Test the BST insert function
         '''
 
-        # Import packages
-        from pytools.graphs_trees import trees
-
-        # Init variables
-        kv1 = (32, '32')
-        kv2 = (12, '12')
-        kv3 = (72, '72')
-        kv4 = (21, '21')
-        kv5 = (100, '100')
-        kv6 = (3.14, 'pi')
-
-        # Init tree and insert
-        binary_search_tree = trees.BinarySearchTree(*kv1)
-        binary_search_tree.insert(*kv2)
-        binary_search_tree.insert(*kv3)
-        binary_search_tree.insert(*kv4)
-        binary_search_tree.insert(*kv5)
-        binary_search_tree[kv6[0]] = kv6[1]
+        # Populate the BST
+        binary_search_tree = self._populate_bst()
 
         # And retrieve values
-        val1 = binary_search_tree.retrieve(kv1[0])
-        self.assertEqual(val1, kv1[1])
-        val2 = binary_search_tree.retrieve(kv2[0])
-        self.assertEqual(val2, kv2[1])
-        val4 = binary_search_tree[kv4[0]]
-        self.assertEqual(val4, kv4[1])
-        val3in = kv3[0] in binary_search_tree
-        self.assertTrue(val3in)
-        val5 = binary_search_tree[kv5[0]]
-        self.assertEqual(val5, kv5[1])
+        node1 = binary_search_tree.retrieve(self.kv1[0])
+        self.assertEqual(node1.value, self.kv1[1])
+        node2 = binary_search_tree.retrieve(self.kv2[0])
+        self.assertEqual(node2.value, self.kv2[1])
+        node4 = binary_search_tree[self.kv4[0]]
+        self.assertEqual(node4.value, self.kv4[1])
+        node3in = self.kv3[0] in binary_search_tree
+        self.assertTrue(node3in)
+        node5 = binary_search_tree[self.kv5[0]]
+        self.assertEqual(node5.value, self.kv5[1])
 
         # Try retrieving, overwrite, and retrieve again
-        pi = binary_search_tree.retrieve(kv6[0])
-        self.assertEqual(pi, kv6[1])
-        binary_search_tree[kv6[0]] = '3.14'
-        pi = binary_search_tree[kv6[0]]
-        self.assertEqual(pi, '3.14')
+        pi = binary_search_tree.retrieve(self.kv6[0])
+        self.assertEqual(pi.value, self.kv6[1])
+        binary_search_tree[self.kv6[0]] = '3.14'
+        pi = binary_search_tree[self.kv6[0]]
+        self.assertEqual(pi.value, '3.14')
 
+    def test_delete(self):
+        '''
+        Test that a ndoe can be deleted from the BST
+        '''
+
+        # Populate the BST
+        binary_search_tree = self._populate_bst()
+
+        # Delete leaf node
+        binary_search_tree.delete(self.kv6[0])
+        kv6_in_bst = self.kv6[0] in binary_search_tree
+        self.assertFalse(kv6_in_bst)
+
+        # Delete node with left child
+        binary_search_tree.delete(self.kv7[0])
+        kv7_in_bst = self.kv7[0] in binary_search_tree
+        self.assertFalse(kv7_in_bst)
+        kv8_in_bst = self.kv8[0] in binary_search_tree
+        self.assertTrue(kv8_in_bst)
+
+        # Delete node with right child
+        binary_search_tree.delete(self.kv4[0])
+        kv4_in_bst = self.kv4[0] in binary_search_tree
+        self.assertFalse(kv4_in_bst)
+        kv10_in_bst = self.kv10[0] in binary_search_tree
+        self.assertTrue(kv10_in_bst)
+
+        # Re-populate full tree for delete with both children test
+        binary_search_tree = self._populate_bst()
+
+        # Delete left child with both children
+        binary_search_tree.delete(self.kv2[0])
+        kv2_in_bst = self.kv2[0] in binary_search_tree
+        self.assertFalse(kv2_in_bst)
+        kv4_in_bst = self.kv4[0] in binary_search_tree
+        self.assertTrue(kv4_in_bst)
+        kv6_in_bst = self.kv4[0] in binary_search_tree
+        self.assertTrue(kv4_in_bst)
+        kv10_in_bst = self.kv10[0] in binary_search_tree
+        self.assertTrue(kv10_in_bst)
+
+        # Delete right child with both children
+        binary_search_tree.delete(self.kv5[0])
+        kv5_in_bst = self.kv5[0] in binary_search_tree
+        self.assertFalse(kv5_in_bst)
+        kv7_in_bst = self.kv7[0] in binary_search_tree
+        self.assertTrue(kv7_in_bst)
+        kv8_in_bst = self.kv8[0] in binary_search_tree
+        self.assertTrue(kv8_in_bst)
+        kv9_in_bst = self.kv9[0] in binary_search_tree
+        self.assertTrue(kv9_in_bst)
 
 if __name__ == '__main__':
     unittest.main()

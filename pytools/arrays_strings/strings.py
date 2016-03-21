@@ -107,7 +107,7 @@ def reverse_cstyle_str(input_str):
 
     # Iterate through string from end to beginning
     for idx in range(str_length):
-        rev_idx = str_length - idx - 1
+        rev_idx = str_length - 1 - idx
         rev_char = input_str[rev_idx]
         rev_str = rev_str + rev_char
 

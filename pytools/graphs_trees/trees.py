@@ -1,7 +1,6 @@
 # pytools/graphs_trees/trees.py
 #
 # Author: Daniel Clark, 2016
-from __builtin__ import True
 
 '''
 This module contains functions to solve problems related to graphs and
@@ -216,11 +215,16 @@ class BinarySearchTree(object):
         '''
         Init tree or sub-tree
         '''
+        # Key-value pair
         self.key = key
         self.value = value
+        # Children and parent
         self.left_child = None
         self.right_child = None
         self.parent = None
+        # Status flags
+        self.is_left_child = False
+        self.is_right_child = False
 
     def insert(self, key, value):
         '''
@@ -232,20 +236,27 @@ class BinarySearchTree(object):
             err_msg = 'Key: "%s" must be an integer or float!' % (str(key))
             raise KeyError(err_msg)
 
-        # If key < current key, insert left
-        if key < self.key:
-            if self.left_child:
-                self.left_child.insert(key, value)
+        # If node is populated; key < current key, insert left
+        if self.key:
+            if key < self.key:
+                if self.left_child:
+                    self.left_child.insert(key, value)
+                else:
+                    self.left_child = BinarySearchTree(key, value)
+                    self.left_child.parent = self
+            # If key > current key, insert right
+            elif key > self.key:
+                if self.right_child:
+                    self.right_child.insert(key, value)
+                else:
+                    self.right_child = BinarySearchTree(key, value)
+                    self.right_child.parent = self
+            # Key == current key, replace
             else:
-                self.left_child = BinarySearchTree(key, value)
-        # If key > current key, insert right
-        elif key > self.key:
-            if self.right_child:
-                self.right_child.insert(key, value)
-            else:
-                self.right_child = BinarySearchTree(key, value)
-        # Key == current key, replace
+                self.value = value
+        # Otherwise populate the node
         else:
+            self.key = key
             self.value = value
 
     def __setitem__(self, key, value):
@@ -278,8 +289,7 @@ class BinarySearchTree(object):
                 return self.right_child.retrieve(key)
         # Key == current key, return value
         else:
-            return self.value
-
+            return self
 
     def __getitem__(self, key):
         '''
@@ -295,3 +305,112 @@ class BinarySearchTree(object):
             return True
         else:
             return False
+
+    def _replace_node_data(self, key, value, left_child, right_child):
+        '''
+        Replace the node data and connections
+        '''
+        # Populate key and value
+        self.key = key
+        self.value = value
+
+        # Populate children
+        self.left_child = left_child
+        self.right_child = right_child
+
+        # Populate children parent fields
+        if self.left_child:
+            self.left_child.parent = self
+        if self.right_child:
+            self.right_child.parent = self
+
+    def delete(self, key):
+        '''
+        Delete subtree with specified key
+        '''
+
+        # First find subtree node
+        curr_node = self.retrieve(key)
+        if not curr_node:
+            err_msg = 'Node with key: %s not found; cannot delete!' % str(key)
+            raise KeyError(err_msg)
+
+        # If leaf, assign parent pointer (left or right) to None
+        if not (curr_node.left_child or curr_node.right_child):
+            # If it's not the root node
+            if curr_node.parent:
+                if curr_node == curr_node.parent.left_child:
+                    curr_node.parent.left_child = None
+                else:
+                    curr_node.parent.right_child = None
+            # Else it is the root node, set to None
+            else:
+                curr_node._replace_node_data(key=None, value=None,
+                                             left_child=None, right_child=None)
+        # Has a left child only
+        elif curr_node.left_child and not curr_node.right_child:
+            # If it is a left child, put its left child as parent's left
+            if curr_node.is_left_child:
+                curr_node.parent.left_child = curr_node.left_child
+                curr_node.left_child.parent = curr_node.parent
+            # Else it is a right child, put its left child as parent's right
+            elif curr_node.is_right_child:
+                curr_node.parent.right_child = curr_node.left_child
+                curr_node.left_child.parent = curr_node.parent
+            # Else it is the root node, replace key, value, and children
+            else:
+                curr_node._replace_node_data(key=curr_node.left_child.key,
+                                             value=curr_node.left_child.value,
+                                             left_child=curr_node.left_child,
+                                             right_child=None)
+        # Has right child only
+        elif curr_node.right_child and not curr_node.left_child:
+            # If it is a left child, put its right child as parent's left
+            if curr_node.is_left_child:
+                curr_node.parent.left_child = curr_node.right_child
+                curr_node.right_child.parent = curr_node.parent
+            # Else it is a right, put its right child as parent's right
+            elif curr_node.is_right_child:
+                curr_node.parent_right_child = curr_node.right_child
+                curr_node.right_child.parent = curr_node.parent
+            # Else it is the root node, replace key, value, and children
+            else:
+                curr_node._replace_node_data(key=curr_node.right_child.key,
+                                             value=curr_node.right_child.value,
+                                             left_child=None,
+                                             right_child=curr_node.right_child)
+        # Else, has both left and right child, find successor
+        else:
+            # Get the next largest node (left leaf node in right subtree)
+            successor = curr_node.right_child
+            while successor.left_child:
+                successor = successor.left_child
+            # Check if it has a right child (it wont ever have a left)
+            if successor.right_child:
+                # Set its right child's parent to its parent
+                successor.right_child.parent = successor.parent
+                # If it's a left child, set parent's left to its right
+                if successor.is_left_child:
+                    successor.parent.left_child = successor.right_child
+                # Else it must be a right child, set parents right to its right
+                else:
+                    successor.parent.right_child = successor.right_child
+            # Else, it has no children, set parent's left child to None
+            else:
+                if successor.is_left_child:
+                    successor.parent.left_child = None
+                else:
+                    successor.parent.right_child = None
+            # Replace node data of curr_node with successor data
+            curr_node.key = successor.key
+            curr_node.value = successor.value
+
+    def _find_successor(self):
+        '''
+        For a node with left and right children, find its successor;
+        the successor is the next largest key node in the tree
+        '''
+        succ = None
+        # If
+        if self.right_child:
+            succ = self.right_child
