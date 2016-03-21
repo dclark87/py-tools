@@ -405,12 +405,22 @@ class BinarySearchTree(object):
             curr_node.key = successor.key
             curr_node.value = successor.value
 
-    def _find_successor(self):
+    def __iter__(self):
         '''
-        For a node with left and right children, find its successor;
-        the successor is the next largest key node in the tree
+        Allow iteration over BST, is ran recursively via for loop
         '''
-        succ = None
-        # If
-        if self.right_child:
-            succ = self.right_child
+
+        # If child exists
+        if self:
+            # Do left all-way down
+            if self.left_child:
+                # Recursion here (__iter__ overrides for)
+                for elem in self.left_child:
+                    yield elem
+            # Yield key value
+            yield self.key
+            # Then do right all-way down
+            if self.right_child:
+                # Recursion here (__iter__ overrides for)
+                for elem in self.right_child:
+                    yield elem

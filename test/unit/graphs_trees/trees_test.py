@@ -310,5 +310,17 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         kv9_in_bst = self.kv9[0] in binary_search_tree
         self.assertTrue(kv9_in_bst)
 
+    def test_iterator(self):
+        '''
+        Test the BST can be iterated over and returns elements in order
+        '''
+
+        # Init BST
+        binary_search_tree = self._populate_bst()
+
+        # Check elements are in ascending order
+        keys = [key for key in binary_search_tree]
+        self.assertEqual(keys, sorted(keys))
+
 if __name__ == '__main__':
     unittest.main()
