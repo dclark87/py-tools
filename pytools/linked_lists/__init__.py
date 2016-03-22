@@ -6,3 +6,6 @@
 This module contains classes and functions for working with linked
 lists
 '''
+
+# Import modules
+import linked_lists

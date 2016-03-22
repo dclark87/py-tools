@@ -6,3 +6,7 @@
 This module contains classes and functions for working with stacks
 and queues
 '''
+
+# Import modules
+import queues
+import stacks

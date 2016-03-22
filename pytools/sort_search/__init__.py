@@ -6,3 +6,6 @@
 This package contains classes and functions for sorting and searching
 through data structures
 '''
+
+# Import modules
+import hash_tables

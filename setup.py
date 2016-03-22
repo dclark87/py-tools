@@ -20,4 +20,4 @@ setup(name='py-tools',
       author='Daniel Clark',
       author_email='danieljclark87@gmail.com',
       url='https://github.com/dclark87/py-tools',
-      packages=find_packages())
+      packages=find_packages(exclude=['test*']))

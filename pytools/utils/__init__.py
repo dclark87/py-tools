@@ -7,5 +7,5 @@ The pytools/utils package contains modules with various useful tools.
 '''
 
 # Import Python modules
-from . import file_utils
-from . import log_tools
+import file_utils
+import log_tools
