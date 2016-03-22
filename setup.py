@@ -10,8 +10,7 @@ to the local disk.
 '''
 
 # Import packages
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import find_packages, setup
 
 # Use disutils' setup function to install the package
 setup(name='py-tools',
