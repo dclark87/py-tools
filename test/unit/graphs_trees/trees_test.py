@@ -322,5 +322,47 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         keys = [key for key in binary_search_tree]
         self.assertEqual(keys, sorted(keys))
 
+
+class BinaryHeapTestCase(unittest.TestCase):
+    '''
+    TestCase for the BinaryHeap class from the trees.py module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        pass
+
+    def test_insert_dequeue(self):
+        '''
+        Test whether tree is populated correctly via insert
+        '''
+
+        # Import packages
+        from pytools.graphs_trees import trees
+
+        # Init variables
+        in_keys = [5, 9, 11, 14, 18, 19, 21, 33, 17, 27]
+
+        # Init heap and insert
+        binary_heap = trees.BinaryHeap()
+        for key in in_keys:
+            binary_heap.insert(key)
+        # Make sure all items are in
+        self.assertEqual(len(in_keys), binary_heap.current_size)
+
+        # Sort in keys and compare with dequeued list
+        sorted_in = sorted(in_keys)
+        dequeued_out = []
+        for idx in range(len(in_keys)):
+            dequeued_out.append(binary_heap.dequeue_min())
+
+        self.assertEqual(dequeued_out, sorted_in)
+
+
 if __name__ == '__main__':
     unittest.main()

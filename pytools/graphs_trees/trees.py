@@ -424,3 +424,121 @@ class BinarySearchTree(object):
                 # Recursion here (__iter__ overrides for)
                 for elem in self.right_child:
                     yield elem
+
+
+class BinaryHeap(object):
+    '''
+    Binary Heap class - priority queue implementation (min heap);
+    enqueue and dequeue items in O(logn) time 
+    '''
+
+    def __init__(self):
+        '''
+        Init the binary heap
+        '''
+        self.heap_list = [0]
+        self.current_size = 0
+
+    def _get_min_child(self, idx):
+        '''
+        Method used to find index of minimum child of a node
+        '''
+
+        # If the right child node does not exist, return left
+        if idx*2 + 1 > self.current_size:
+            return idx*2
+        # Get left and right children indexs
+        left = idx*2
+        right = idx*2+1
+        # If left key is smaller, return left
+        if self.heap_list[left] < self.heap_list[right]:
+            return left
+        # Else return right
+        else:
+            return right
+
+    def _percolate_up(self, idx):
+        '''
+        Method to send new input key to as far to top of tree heap
+        while maintaining parent-child property
+        '''
+
+        # While parent is not root
+        while idx//2 > 0:
+            # If the last added node is smaller than parent
+            if self.heap_list[idx] < self.heap_list[idx//2]:
+                # Swap parent and child
+                tmp = self.heap_list[idx//2]
+                self.heap_list[idx//2] = self.heap_list[idx]
+                self.heap_list[idx] = tmp
+            # Check next parent/child combo if a swap is needed
+            idx = idx//2
+
+    def _percolate_down(self, idx):
+        '''
+        Method to send shifted root key as far down tree heap while
+        maintaining parent-child property
+        '''
+
+        # While index is not a leaf
+        while idx*2 <= self.current_size:
+            # Get the minimum child idx
+            min_child_idx = self._get_min_child(idx)
+            # If the parent is greater than minimum child
+            if self.heap_list[idx] > self.heap_list[min_child_idx]:
+                # Swap parent and min child
+                tmp = self.heap_list[min_child_idx]
+                self.heap_list[min_child_idx] = self.heap_list[idx]
+                self.heap_list[idx] = tmp
+            # Check next parent/child combo if a swap is needed
+            idx = min_child_idx
+
+    def insert(self, key):
+        '''
+        Insert a new node into the BinaryHeap tree
+        '''
+
+        # Append key to end of list
+        self.heap_list.append(key)
+        # Increase size of heap
+        self.current_size += 1
+        # Percolate it up until heap order property is satisfied
+        self._percolate_up(self.current_size)
+
+    def dequeue_min(self):
+        '''
+        Method to return the smallest key item in the heap
+        '''
+
+        # Smallest key node is always heap[1]
+        min_key = self.heap_list[1]
+
+        # Pop latest value off end and enter as root
+        # This keeps heap structure property
+        self.heap_list[1] = self.heap_list[self.current_size]
+        # Decrement size and pop off value
+        self.current_size -= 1
+        self.heap_list.pop()
+        # Percolate the new root back down
+        self._percolate_down(1)
+
+        # Return the minimum key
+        return min_key
+
+    def build_heap(self, in_list):
+        '''
+        Build a heap tree from an unsorted input list
+        '''
+
+        # Set heap to [0, ...(in_list)] and set size
+        self.heap_list = [0] + in_list
+        self.current_size = len(in_list)
+        # Start percolating down from parents of leaves
+        # Since it is a complete tree, len//2 as a start guarantees
+        # Percolating from right-to-left, bottom-to-top via idx-=1
+        idx = self.current_size//2
+        while idx > 0:
+            # Percolate parent level down
+            self._percolate_down(idx)
+            # Move idx base up and repeat downward percolation of rest
+            idx -= 1
