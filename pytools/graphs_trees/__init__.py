@@ -6,3 +6,6 @@
 This package contains modules, classes, and functions to manipulate
 arrays and strings for solving problems
 '''
+
+# Import modules
+import trees

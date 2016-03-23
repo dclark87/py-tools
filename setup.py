@@ -10,8 +10,7 @@ to the local disk.
 '''
 
 # Import packages
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import find_packages, setup
 
 # Use disutils' setup function to install the package
 setup(name='py-tools',
@@ -20,4 +19,4 @@ setup(name='py-tools',
       author='Daniel Clark',
       author_email='danieljclark87@gmail.com',
       url='https://github.com/dclark87/py-tools',
-      packages=find_packages())
+      packages=find_packages(exclude=['test*']))
