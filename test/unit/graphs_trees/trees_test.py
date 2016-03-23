@@ -260,7 +260,7 @@ class BinarySearchTreeTestCase(unittest.TestCase):
 
     def test_delete(self):
         '''
-        Test that a ndoe can be deleted from the BST
+        Test that a node can be deleted from the BST
         '''
 
         # Populate the BST
