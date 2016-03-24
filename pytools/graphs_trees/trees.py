@@ -1,11 +1,10 @@
 # pytools/graphs_trees/trees.py
 #
 # Author: Daniel Clark, 2016
-from __builtin__ import True
 
 '''
-This module contains functions to solve problems related to graphs and
-trees data structures
+This module contains functions to solve problems related to trees
+data structures
 '''
 
 

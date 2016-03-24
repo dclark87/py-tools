@@ -14,7 +14,7 @@ from setuptools import find_packages, setup
 
 # Use disutils' setup function to install the package
 setup(name='py-tools',
-      version='0.0.4',
+      version='0.0.5',
       description='Various Python utilities',
       author='Daniel Clark',
       author_email='danieljclark87@gmail.com',
