@@ -4,7 +4,7 @@ py-tools
 This repository contains the Python package pytools. The package contains modules with various useful tools.
 
 ``pytools`` contents
---------
+--------------------
 arrays_strings
 ~~~~~~~~~~~~~~
 - strings.py - This module contains functions which manipulate strings
