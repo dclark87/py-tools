@@ -8,4 +8,5 @@ arrays and strings for solving problems
 '''
 
 # Import modules
+import graphs
 import trees

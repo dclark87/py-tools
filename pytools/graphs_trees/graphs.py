@@ -27,6 +27,8 @@ class Vertex(object):
         self.color = 'white'
         self.dist = sys.maxsize
         self.pred = None
+        self.disc = 0
+        self.fin = 0
 
     def add_neighbor(self, nbr, weight=0):
         '''
@@ -179,6 +181,93 @@ def build_wordladder_graph(text_filepath):
     return word_graph
 
 
-def breadth_first_search(graph, start):
+def breadth_first_search(graph, start_vert):
     '''
+    Function to perform a BFS search on a graph given a starting vertex
     '''
+
+    # Import packages
+    from pytools.stacks_queues import queues
+
+    # Init variables
+    start_vert.dist = 0
+    start_vert.pred = None
+
+    # Add starting vertex to Queue
+    vert_queue = queues.ListQueue()
+    vert_queue.enqueue(start_vert)
+
+    # While the queue is not empty
+    while vert_queue.size() > 0:
+        # Pop oldest item off queue
+        curr_vert = vert_queue.dequeue()
+        # Iterate through each of its neighbors
+        for nbr_vert in curr_vert.get_connections():
+            # If it hasnt been searced (is white)...search
+            if nbr_vert.color == 'white':
+                nbr_vert.color = 'gray'
+                nbr_vert.dist = curr_vert.dist + 1
+                nbr_vert.pred = curr_vert
+                vert_queue.enqueue(nbr_vert)
+        # Once done searching through neighbors, curr_vert is searched
+        curr_vert.color = 'black'
+
+
+def traverse(start_vert):
+    '''
+    Traverse through a graph that has been searched through by
+    specifying a start vertex
+    '''
+
+    # Init variables
+    curr_vert = start_vert
+    # While predecessor exists, traverse through and print keys
+    while curr_vert.pred:
+        print curr_vert.key
+        curr_vert = curr_vert.pred
+    # Print ultimate parent vertex
+    print curr_vert.key
+
+
+class DFSGraph(Graph):
+    '''
+    A depth-first search (DFS) graph
+    '''
+
+    def __init__(self):
+        '''
+        Init the DFS Graph obj
+        '''
+        super(DFSGraph, self).__init__()
+        self.time = 0
+
+    def _dfs_visit(self, start_vertex):
+        '''
+        Recursive function for visiting a vertex
+        '''
+
+        # Mark vertex as pending, and incr time
+        start_vertex.color = 'gray'
+        self.time += 1
+        start_vertex.disc = self.time
+        for other_vertex in start_vertex.get_connections():
+            if other_vertex.color == 'white':
+                other_vertex.pred = start_vertex
+                # Recursively visit first other neighbor
+                self._dfs_visit(other_vertex)
+        start_vertex.color = 'black'
+        self.time += 1
+        start_vertex.fin = self.time
+
+    def depth_first_search(self):
+        '''
+        Perform a depth-first search
+        '''
+
+        # Init all to white - unseen
+        for each_vertex in self:
+            each_vertex.color = 'white'
+            each_vertex.pred = None
+        for each_vertex in self:
+            if each_vertex.color == 'white':
+                self._dfs_visit(each_vertex)
