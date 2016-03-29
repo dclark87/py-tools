@@ -26,6 +26,7 @@ class PlusMinusGameTestCase(unittest.TestCase):
 
     def test_list_moves(self):
         '''
+        Method to test if player one can win or not given a start str
         '''
 
         # Import packages

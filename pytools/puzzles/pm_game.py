@@ -49,9 +49,8 @@ def player_one_wins(input_str):
     p1_move_wins = []
     # Explore each move
     for move in moves:
-        print '---move--- %s' % str(move)
         p1_wins = player_one_wins(move)
-        p1_move_wins.append(p1_wins)
+        p1_move_wins.append(not p1_wins)
     if True in p1_move_wins:
         return True
     else:
@@ -60,4 +59,3 @@ def player_one_wins(input_str):
     # Even number of recursive calls will result in keeping flag
     # the same, odd will be different
     # Even calls with no moves left at end 
-    #return not p1_wins
