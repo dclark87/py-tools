@@ -3,8 +3,7 @@
 # Author: Daniel Clark, 2016
 
 '''
-This module contains functions to solve problems related to linked
-lists
+This module contains the class definitions for the linked list
 '''
 
 class Node(object):
@@ -38,11 +37,12 @@ class LinkedList(object):
     Linked list class (singly-linked)
     '''
 
-    def __init__(self, head=None):
+    def __init__(self):
         '''
         Init list head
         '''
-        self.head = head
+        self.head = None
+        self.size = 0
 
     def insert(self, data):
         '''
@@ -52,6 +52,7 @@ class LinkedList(object):
         # Init Node obj and point head of list to it
         node = Node(data, self.head)
         self.head = node
+        self.size += 1
 
     def size(self):
         '''
@@ -59,16 +60,7 @@ class LinkedList(object):
         '''
 
         # Init variables
-        current_node = self.head
-        count = 0
-
-        # Iterate through list until we get None
-        while current_node:
-            count += 1
-            current_node = current_node.next_node
-
-        # Return total count
-        return count
+        return self.size
 
     def find_node(self, data):
         '''
@@ -119,6 +111,9 @@ class LinkedList(object):
         # Otherwise, set prev_node's next to current's next
         else:
             prev_node.next_node = current_node.next_node
+
+        # Decrement size
+        self.size -= 1
 
     def reverse(self):
         '''
