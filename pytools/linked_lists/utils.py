@@ -9,7 +9,8 @@ lists
 
 def remove_dups_llist(llist):
     '''
-    Remove duplicate values from an unsorted linked list
+    Remove duplicate values from an unsorted linked list using a dict
+    external buffer for count
     '''
 
     # Init variables
@@ -34,6 +35,38 @@ def remove_dups_llist(llist):
         next_node = node.next_node
 
     # Return list
+    return llist
+
+
+def remove_dups_llist_inplace(llist):
+    '''
+    Remove duplicate values from an unsorted linked list in-place
+    '''
+
+    # Init root, follower, leader
+    root = llist.head
+    follower = root
+    leader = root.next_node
+
+    # While root next is not null at end
+    while root.next_node:
+        # If leader is same as root, point follower to next
+        if leader.data == root.data:
+            follower.next_node = leader.next_node
+        # Otherwise, move follower up
+        # everything between follower and root is unique
+        else:
+            follower = leader
+
+        # If leader points to null at end, move up root
+        if not leader.next_node:
+            root = root.next_node
+            follower = root
+            leader = root.next_node
+        else:
+            leader = leader.next_node
+
+    # Return unique linked list
     return llist
 
 

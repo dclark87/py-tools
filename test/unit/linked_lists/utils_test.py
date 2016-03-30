@@ -50,6 +50,24 @@ class LinkedListsUtilsTestCase(unittest.TestCase):
         is_unique = utils.is_llist_unique(llist_nondups)
         self.assertTrue(is_unique)
 
+    def test_remove_dups_inplace_is_unique(self):
+        '''
+        Function to test the remove duplicates in-place function
+        '''
+
+        # Import packages
+        from pytools.linked_lists import utils
+
+        # Test that the dups linked list is not unique
+        not_unique = utils.is_llist_unique(self.llist_dups)
+        self.assertFalse(not_unique)
+
+        # Run function to remove dups
+        llist_nondups = utils.remove_dups_llist_inplace(self.llist_dups)
+        # Test it returns unique
+        is_unique = utils.is_llist_unique(llist_nondups)
+        self.assertTrue(is_unique)
+
 
 if __name__ == '__main__':
     unittest.main()
