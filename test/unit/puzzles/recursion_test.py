@@ -12,7 +12,7 @@ import unittest
 
 class CountPathsTestCase(unittest.TestCase):
     '''
-    TestCase for the utils module
+    TestCase for the count_paths method
     '''
 
     # Set up test case
@@ -41,7 +41,6 @@ class CountPathsTestCase(unittest.TestCase):
                       (math.factorial(n-1) * math.factorial(n-1))
         return total_paths
 
-
     def test_count_paths(self):
         '''
         Test the count_paths function
@@ -50,11 +49,48 @@ class CountPathsTestCase(unittest.TestCase):
         # Import packages
         from pytools.puzzles import recursion
 
-
         # Get total paths
         total_paths = self._combinations(5)
         paths = recursion.count_paths(5, 1, 1)
         self.assertEqual(paths, total_paths)
+
+
+class SubsetsTestCase(unittest.TestCase):
+    '''
+    TestCase for the subsets method
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+        pass
+
+    def test_subsets(self):
+        '''
+        Test the count_paths function
+        '''
+
+        # Import packages
+        from pytools.puzzles import recursion
+
+        # Init variables
+        set1 = 'abc'
+
+        # Get generator and create list of subsets
+        ssgen1 = recursion.subsets(set1)
+        subsets1 = sorted([sub for sub in ssgen1])
+        # Create list of subsets via reduce function
+        subsets2 = sorted(recursion.subsets_reduce(set1))
+
+        # Assert they agree
+        self.assertEqual(subsets1, subsets2)
+
+        # Get subsets via binary method
+        subsets3 = sorted(recursion.subsets_binary(set1))
+        # Assert they agree
+        self.assertEqual(subsets1, subsets3)
 
 
 if __name__ == '__main__':
