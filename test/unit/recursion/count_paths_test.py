@@ -1,9 +1,9 @@
-# test/unit/puzzles/recursion_test.py
+# test/unit/recursion/count_paths_test.py
 #
 # Author: Daniel Clark, 2016
 
 '''
-Unit test module to perform testing on puzzles/recursion module
+Unit test module to perform testing on recursion/count_paths module
 '''
 
 # Import packages
@@ -12,7 +12,7 @@ import unittest
 
 class CountPathsTestCase(unittest.TestCase):
     '''
-    TestCase for the count_paths method
+    TestCase for the count_paths function
     '''
 
     # Set up test case
@@ -47,50 +47,12 @@ class CountPathsTestCase(unittest.TestCase):
         '''
 
         # Import packages
-        from pytools.puzzles import recursion
+        from pytools.recursion import count_paths
 
         # Get total paths
         total_paths = self._combinations(5)
-        paths = recursion.count_paths(5, 1, 1)
+        paths = count_paths.count_paths(5, 1, 1)
         self.assertEqual(paths, total_paths)
-
-
-class SubsetsTestCase(unittest.TestCase):
-    '''
-    TestCase for the subsets method
-    '''
-
-    # Set up test case
-    def setUp(self):
-        '''
-        Initialize test case with attributes
-        '''
-        pass
-
-    def test_subsets(self):
-        '''
-        Test the count_paths function
-        '''
-
-        # Import packages
-        from pytools.puzzles import recursion
-
-        # Init variables
-        set1 = 'abc'
-
-        # Get generator and create list of subsets
-        ssgen1 = recursion.subsets(set1)
-        subsets1 = sorted([sub for sub in ssgen1])
-        # Create list of subsets via reduce function
-        subsets2 = sorted(recursion.subsets_reduce(set1))
-
-        # Assert they agree
-        self.assertEqual(subsets1, subsets2)
-
-        # Get subsets via binary method
-        subsets3 = sorted(recursion.subsets_binary(set1))
-        # Assert they agree
-        self.assertEqual(subsets1, subsets3)
 
 
 if __name__ == '__main__':

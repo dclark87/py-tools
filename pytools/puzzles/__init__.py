@@ -1,11 +1,8 @@
-# pm_game/__init__.py
+# pytools/puzzles/__init__.py
 #
 # Author: Daniel Clark, 2016
 
 '''
-This package contains modules, classes, and functions to manipulate
-arrays and strings for solving problems
+This package contains modules, classes, and functions to solve various
+puzzles and challenges
 '''
-
-# Import modules
-from . import recursion

@@ -167,7 +167,7 @@ def remove_dup_chars2(input_str):
 
     # While checker is still in string
     while chk < len(input_str):
-        # Iterate through all chars before checker adn compare
+        # Iterate through all chars before checker and compare
         while itr < chk:
             # If there's a match, omit chk char from new string
             if input_str[itr] == input_str[chk]:
