@@ -7,6 +7,19 @@ This module contains functions to solve problems related to string
 manipulation and testing
 '''
 
+
+def _check_numeric(input_arr):
+    '''
+    Check all elements of the array are numeric
+    '''
+
+    # Check input is numeric
+    for val in input_arr:
+        if not (isinstance(val, int) or isinstance(val, float)):
+            err_msg = 'All values in input array must be numeric! Found: %s' \
+                      % str(val)
+            raise ValueError(err_msg)
+
 def merge_sort(input_arr):
     '''
     Function to sort an input array of numeric data via the merge
@@ -14,10 +27,7 @@ def merge_sort(input_arr):
     '''
 
     # Check for numeric types
-    for el in input_arr:
-        if not (isinstance(el, int) or isinstance(el, float)):
-            err_msg = 'Element: %s is not numeric!' % str(el)
-            raise ValueError(err_msg)
+    _check_numeric(input_arr)
 
     len_arr = len(input_arr)
     sorted_arr = []
@@ -59,52 +69,54 @@ def merge_sort(input_arr):
     return sorted_arr
 
 
-def quick_sort(input_arr, first=None, last=None):
+def quick_sort(input_arr):
     '''
     Function to sort an input array of numeric data via the quick
     sort algorithm
     '''
 
     # Check for numeric types
-    for el in input_arr:
-        if not (isinstance(el, int) or isinstance(el, float)):
-            err_msg = 'Element: %s is not numeric!' % str(el)
-            raise ValueError(err_msg)
+    _check_numeric(input_arr)
 
-    if not first:
-        first = 0
-    if not last:
-        last = len(input_arr)-1
-    if first < last:
-        split_point = _partition(input_arr, first, last)
-        quick_sort(input_arr, first, split_point-1)
-        quick_sort(input_arr, split_point+1, last)
+    # Base case of length 0 or 1
+    if len(input_arr) == 0 or len(input_arr) == 1:
+        return input_arr
 
-    return input_arr
-
-def _partition(input_arr, first, last):
-    '''
-    '''
-
-    pivot = input_arr[first]
-
-    leftmark = first+1
-    rightmark = last
-
+    # Init pivot and left and right marks
+    pivot = 0
+    leftmark = 1
+    rightmark = len(input_arr)-1
     done = False
-    while not done:
-        while leftmark <= rightmark and input_arr[leftmark] <= pivot:
-            leftmark += 1
-        while input_arr[rightmark] >= pivot and rightmark >= leftmark:
-            rightmark -= 1
-        if rightmark < leftmark:
-            done = True
-        else:
-            temp = input_arr[leftmark]
-            input_arr[leftmark] = input_arr[rightmark]
-            input_arr[rightmark] = temp
-    temp = input_arr[first]
-    input_arr[first] = input_arr[rightmark]
-    input_arr[rightmark] = temp
 
-    return rightmark
+    while not done:
+        # Increment left mark as long as its less than pivotval
+        while input_arr[leftmark] < input_arr[pivot] and leftmark <= rightmark:
+            leftmark += 1
+
+        # Decrement right mark as long as its less than pivotval
+        while input_arr[rightmark] >= input_arr[pivot] and rightmark >= leftmark:
+            rightmark -= 1
+
+        if rightmark >= leftmark:
+            tmp = input_arr[leftmark]
+            input_arr[leftmark] = input_arr[rightmark]
+            input_arr[rightmark] = tmp
+        else:
+            done = True
+
+    # Marks passed eachother, new pivot point
+    tmp = input_arr[pivot]
+    input_arr[pivot] = input_arr[rightmark]
+    input_arr[rightmark] = tmp
+    pivot = rightmark
+
+    # Recursively call on left and right of pivot
+    left_sorted = quick_sort(input_arr[:pivot+1])
+    right_sorted = quick_sort(input_arr[pivot+1:])
+
+    # Merge two sorted subarrays together
+    output_arr = left_sorted
+    output_arr.extend(right_sorted)
+
+    # Return merged and sorted array
+    return output_arr

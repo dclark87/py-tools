@@ -5,3 +5,8 @@
 '''
 This module performs unit testing on the pytools/sort_search sub-package
 '''
+
+# Import relative packages
+from . import a_merge_b_test
+from . import hash_tables_test
+from . import sorting_test

@@ -5,3 +5,6 @@
 '''
 This module performs unit testing on the pytools/array_strings module
 '''
+
+# Import relative packages
+from . import strings_test

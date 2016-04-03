@@ -26,6 +26,7 @@ class SortingTestCase(unittest.TestCase):
 
     def test_merge_sort(self):
         '''
+        Test the merge sort function is working properly
         '''
 
         # Import packages
@@ -39,15 +40,16 @@ class SortingTestCase(unittest.TestCase):
 
     def test_quick_sort(self):
         '''
+        Test the quick sort function is working properly
         '''
-
+ 
         # Import packages
         from pytools.sort_search import sorting
-
+ 
         input_arr = [4,6,3,9.5,0,12,-1]
         sorted_arr = sorted(input_arr)
         quick_sorted = sorting.quick_sort(input_arr)
-
+ 
         self.assertEqual(sorted_arr, quick_sorted)
 
 if __name__ == '__main__':
