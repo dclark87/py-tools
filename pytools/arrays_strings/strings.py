@@ -186,3 +186,33 @@ def remove_dup_chars2(input_str):
 
     # Return unique'd string
     return input_str
+
+
+def check_anagrams(str1, str2):
+    '''
+    Function to check if two strings are anagrams of eachother
+    '''
+
+    # Init variables
+    dict1 = {}
+    dict2 = {}
+
+    # Build dict from str1
+    for char in str1:
+        if dict1.has_key(char):
+            dict1[char] += 1
+        else:
+            dict1[char] = 1
+
+    # Build dict from str2
+    for char in str2:
+        if dict2.has_key(char):
+            dict2[char] += 1
+        else:
+            dict2[char] = 1
+
+    # If they are equal, return True
+    if dict1 == dict2:
+        return True
+    else:
+        return False

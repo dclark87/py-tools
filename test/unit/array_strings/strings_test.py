@@ -10,7 +10,7 @@ Unit test module to perform testing on strings.py
 import unittest
 
 
-class StringsTestCase(unittest.TestCase):
+class CheckUniqueCharsTestCase(unittest.TestCase):
     '''
     TestCase for the strings.py module
     '''
@@ -94,6 +94,21 @@ class StringsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, check_unique_chars2, self.not_string,
                           msg=err_msg)
 
+
+class ReverseCStyleStringTestCase(unittest.TestCase):
+    '''
+    TestCase for the strings.py module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        pass
+
     def test_reverse_cstyle_str(self):
         '''
         Ensure that reverse_cstyle_str() is working properly
@@ -118,6 +133,29 @@ class StringsTestCase(unittest.TestCase):
         err_msg = '%s is not reversed version of %s' % (rev_str2, cstyel_str2_rev)
         self.assertEqual(cstyel_str2_rev, rev_str2, msg=err_msg)
 
+
+class RemoveDupCharsTestCase(unittest.TestCase):
+    '''
+    TestCase for the strings.py module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        self.dup_str1 = 'aZzqrsqtss'
+        self.dup_str1_unique = ''.join(sorted(set(self.dup_str1),
+                                              key=self.dup_str1.index))
+        self.dup_str2 = 'abababababa'
+        self.dup_str2_unique = ''.join(sorted(set(self.dup_str2),
+                                              key=self.dup_str2.index))
+        self.dup_str3 = 'aZaa'
+        self.dup_str3_unique = ''.join(sorted(set(self.dup_str3),
+                                              key=self.dup_str3.index))
+
     def test_remove_dup_chars(self):
         '''
         Ensure that remove_dup_chars() is working properly
@@ -126,28 +164,21 @@ class StringsTestCase(unittest.TestCase):
         # Import packages
         from pytools.arrays_strings.strings import remove_dup_chars
 
-        # Init variables
-        dup_str1 = 'aZzqrsqtss'
-        dup_str1_unique = ''.join(sorted(set(dup_str1), key=dup_str1.index))
-        dup_str2 = 'abababababa'
-        dup_str2_unique = ''.join(sorted(set(dup_str2), key=dup_str2.index))
-        dup_str3 = 'aZaa'
-        dup_str3_unique = ''.join(sorted(set(dup_str3), key=dup_str3.index))
-
-        non_dup_str1 = remove_dup_chars(dup_str1)
+        # Test against inputs
+        non_dup_str1 = remove_dup_chars(self.dup_str1)
         err_msg = '%s did not remove duplicates from input %s' \
-                  % (non_dup_str1, dup_str1)
-        self.assertEqual(dup_str1_unique, non_dup_str1, msg=err_msg)
+                  % (non_dup_str1, self.dup_str1)
+        self.assertEqual(self.dup_str1_unique, non_dup_str1, msg=err_msg)
 
-        non_dup_str2 = remove_dup_chars(dup_str2)
+        non_dup_str2 = remove_dup_chars(self.dup_str2)
         err_msg = '%s did not remove duplicates from input %s' \
-                  % (non_dup_str2, dup_str2)
-        self.assertEqual(dup_str2_unique, non_dup_str2, msg=err_msg)
+                  % (non_dup_str2, self.dup_str2)
+        self.assertEqual(self.dup_str2_unique, non_dup_str2, msg=err_msg)
 
-        non_dup_str3 = remove_dup_chars(dup_str3)
+        non_dup_str3 = remove_dup_chars(self.dup_str3)
         err_msg = '%s did not remove duplicates from input %s' \
-                  % (non_dup_str3, dup_str3)
-        self.assertEqual(dup_str3_unique, non_dup_str3, msg=err_msg)
+                  % (non_dup_str3, self.dup_str3)
+        self.assertEqual(self.dup_str3_unique, non_dup_str3, msg=err_msg)
 
     def test_remove_dup_chars2(self):
         '''
@@ -157,28 +188,60 @@ class StringsTestCase(unittest.TestCase):
         # Import packages
         from pytools.arrays_strings.strings import remove_dup_chars2
 
-        # Init variables
-        dup_str1 = 'aZzqrsqtss'
-        dup_str1_unique = ''.join(sorted(set(dup_str1), key=dup_str1.index))
-        dup_str2 = 'abababababa'
-        dup_str2_unique = ''.join(sorted(set(dup_str2), key=dup_str2.index))
-        dup_str3 = 'aZaa'
-        dup_str3_unique = ''.join(sorted(set(dup_str3), key=dup_str3.index))
-
-        non_dup_str1 = remove_dup_chars2(dup_str1)
+        # Test against inputs
+        non_dup_str1 = remove_dup_chars2(self.dup_str1)
         err_msg = '%s did not remove duplicates from input %s' \
-                  % (non_dup_str1, dup_str1)
-        self.assertEqual(dup_str1_unique, non_dup_str1, msg=err_msg)
+                  % (non_dup_str1, self.dup_str1)
+        self.assertEqual(self.dup_str1_unique, non_dup_str1, msg=err_msg)
 
-        non_dup_str2 = remove_dup_chars2(dup_str2)
+        non_dup_str2 = remove_dup_chars2(self.dup_str2)
         err_msg = '%s did not remove duplicates from input %s' \
-                  % (non_dup_str2, dup_str2)
-        self.assertEqual(dup_str2_unique, non_dup_str2, msg=err_msg)
+                  % (non_dup_str2, self.dup_str2)
+        self.assertEqual(self.dup_str2_unique, non_dup_str2, msg=err_msg)
 
-        non_dup_str3 = remove_dup_chars2(dup_str3)
+        non_dup_str3 = remove_dup_chars2(self.dup_str3)
         err_msg = '%s did not remove duplicates from input %s' \
-                  % (non_dup_str3, dup_str3)
-        self.assertEqual(dup_str3_unique, non_dup_str3, msg=err_msg)
+                  % (non_dup_str3, self.dup_str3)
+        self.assertEqual(self.dup_str3_unique, non_dup_str3, msg=err_msg)
+
+
+class CheckAnagramsTestCase(unittest.TestCase):
+    '''
+    TestCase for the strings.py module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        self.ana1 = 'abcdefg'
+        self.ana2 = 'gfedabc'
+        self.ana3 = 'wxyZ'
+        self.ana4 = 'wZxy'
+
+    def test_check_anagrams(self):
+        '''
+        Check the check_anagrams function is working properly
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import check_anagrams
+
+        are_anagrams1 = check_anagrams(self.ana1, self.ana2)
+        self.assertTrue(are_anagrams1)
+
+        are_anagrams2 = check_anagrams(self.ana3, self.ana4)
+        self.assertTrue(are_anagrams2)
+
+        arent_anagrams1 = check_anagrams(self.ana1, self.ana3)
+        self.assertFalse(arent_anagrams1)
+
+        arent_anagrams2 = check_anagrams(self.ana2, self.ana4)
+        self.assertFalse(arent_anagrams2)
+
 
 # Run unittests via main executable
 if __name__ == '__main__':

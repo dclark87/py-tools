@@ -98,3 +98,29 @@ def is_llist_unique(llist):
 
     # Return true if made it through loop
     return True
+
+
+def find_n_tolast(llist, n):
+    '''
+    Find the nth-to-last element of a singly-linked list
+    '''
+
+    # Check error conditions
+    if llist.size < n:
+        raise ValueError('n must be smaller than size of list!')
+
+    if not isinstance(n, int) or n < 1:
+        raise ValueError('n must be a postive number')
+
+    # Init variables
+    ctr = 0
+    thresh = llist.size - n
+    node = llist.head
+
+    # While ctr is less than thresh, continue searching
+    while ctr < thresh:
+        ctr += 1
+        node = node.next_node
+
+    # Return node data
+    return node.data
