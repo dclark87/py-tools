@@ -139,3 +139,79 @@ class NodeStack(object):
             return True
         else:
             return False
+
+
+class StackNode(object):
+    '''
+    StackNode object to use for the TriStack class; contains data and
+    an integer corresponding to the position of the next Node in the
+    TriStack array
+    '''
+
+    def __init__(self, data, next_idx=None):
+        '''
+        Init the StackNode object
+        '''
+
+        self.data = data
+        self.next_idx = next_idx
+
+
+class MultiStack(object):
+    '''
+    Stack object that keeps multiple stacks in a single array
+    '''
+
+    def __init__(self, num_stacks=3):
+        '''
+        Init empty TriStack object
+        '''
+        self.heads = [None]*num_stacks
+        self.array = []
+
+    def push(self, data, stack_num):
+        '''
+        Add a new node to the stack specified by stack_num
+        '''
+
+        # Check for usage errors
+        if stack_num < 0 or stack_num >= len(self.heads):
+            raise ValueError('invalid stack num!')
+
+        # Get current head index
+        head = self.heads[stack_num]
+        node = StackNode(data=data, next_idx=head)
+        self.array.append(node)
+        self.heads[stack_num] = len(self.array)-1
+
+    def pop(self, stack_num):
+        '''
+        Pop latest data from stack specified by stack_num; this
+        algorithm approaches the problem with memory conservation in
+        mind as it keeps the size of the array to as small as possible
+        instead of letting it grow and setting popped-values to None
+        '''
+
+        # Check for usage errors
+        if stack_num < 0 or stack_num >= len(self.heads):
+            raise ValueError('invalid stack num!')
+
+        # Get head index
+        head = self.heads[stack_num]
+        # If head is not None, pop off item
+        if head:
+            node = self.array.pop(head)
+            # Decrement each node whos next_idx > head
+            for snode in self.array:
+                if snode.next_idx > head:
+                    snode.next_idx -= 1
+            for idx, val in enumerate(self.heads):
+                if val > head:
+                    self.heads[idx] = val-1
+            self.heads[stack_num] = node.next_idx
+
+        else:
+            raise IndexError('no items left on stack: %d!' % stack_num)
+
+        # Return node data
+        return node.data

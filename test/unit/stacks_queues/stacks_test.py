@@ -94,5 +94,48 @@ class StacksTestCase(unittest.TestCase):
         self._assert_stack(node_stack)
 
 
+class MultiStackTestCase(unittest.TestCase):
+    '''
+    TestCase for the MultiStack object from the stacks module
+    '''
+
+    # Set up test case
+    def setUp(self):
+        '''
+        Initialize test case with attributes
+        '''
+
+        # Init instance attributes
+        pass
+
+    def test_push_pop(self):
+        '''
+        Ensure we can push and pop from each stack within object
+        '''
+
+        # Import packages
+        from pytools.stacks_queues import stacks
+
+        # Init stack
+        tri_stack = stacks.MultiStack(3)
+        tri_stack.push('a', 0)
+        tri_stack.push('b', 1)
+        tri_stack.push('c', 1)
+        tri_stack.push('d', 2)
+        tri_stack.push('e', 0)
+        tri_stack.push('f', 2)
+
+        # Pop items
+        c_char = tri_stack.pop(1)
+        self.assertEqual(c_char, 'c')
+        b_char = tri_stack.pop(1)
+        self.assertEqual(b_char, 'b')
+        self.assertRaises(IndexError, tri_stack.pop, 1)
+        f_char = tri_stack.pop(2)
+        self.assertEqual(f_char, 'f')
+        e_char = tri_stack.pop(0)
+        self.assertEqual(e_char, 'e')
+
+
 if __name__ == '__main__':
     unittest.main()
