@@ -1,6 +1,7 @@
 # pytools/graphs_trees/utils.py
 #
 # Author: Daniel Clark, 2016
+from __builtin__ import True
 
 '''
 This module contains utilities to solve problems related to graphs and
@@ -25,7 +26,7 @@ def _get_max_height(tree):
     '''
 
     # If passed in tree is None, return 0 for height
-    if not tree:
+    if not tree or not (tree.left_child or tree.right_child):
         return 0
 
     # Get left and right leaf heights
@@ -55,7 +56,7 @@ def _get_min_height(tree):
     '''
 
     # If passed in tree is None, return 0 for height
-    if not tree:
+    if not tree or not (tree.left_child or tree.right_child):
         return 0
 
     # Get left and right leaf heights
@@ -93,3 +94,74 @@ def check_tree_balanced(tree):
 
     # Return balance flag
     return balanced
+
+
+def verify_tree_property(tree):
+    '''
+    Traverse through the tree and assert that the parent is greater
+    than left child and less than right child
+    '''
+
+    # Init variables
+    valid_l = True
+    valid_r = True
+
+    # Check left child recursively
+    if tree.left_child:
+        if tree.value < tree.left_child.value:
+            return False
+        valid_l = verify_tree_property(tree.left_child)
+
+    # Check right child recursively
+    if tree.right_child:
+        if tree.value > tree.right_child.value:
+            return False
+        valid_r = verify_tree_property(tree.right_child)
+
+    # Return True only if both right and left are True
+    valid = (valid_l and valid_r)
+    return valid
+
+
+def binary_tree_from_arr(arr, start, end):
+    '''
+    Given a sorted array, build a binary tree of the values such that
+    it has the minimum height: log_2(n)
+
+    Parameters
+    ----------
+    arr : list
+        a sorted list of numbers
+    start : int
+        the starting index to evaluate in list
+    end : int
+        the last index to evaluate in list
+
+    Returns
+    -------
+    tree_node : pytools.graphs_trees.BinaryTree
+        the populated tree node with left and right children populated
+        correctly
+    '''
+
+    # Import packages
+    from pytools.graphs_trees import trees
+
+    # Check base case
+    if end < start:
+        return None
+
+    # Get mid point and init tree node
+    mid = (start+end)//2
+    tree_node = trees.BinaryTree(arr[mid])
+
+    # Recursively populate sub trees
+    left_child = binary_tree_from_arr(arr, start, mid-1)
+    right_child = binary_tree_from_arr(arr, mid+1, end)
+
+    # Tie in left and right children
+    tree_node.left_child = left_child
+    tree_node.right_child = right_child
+
+    # Return completed tree node
+    return tree_node
