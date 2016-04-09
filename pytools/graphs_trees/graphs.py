@@ -123,6 +123,49 @@ class Graph(object):
         '''
         return self.vert_dict.keys()
 
+    def clear_visited(self):
+        '''
+        Set all colors to white
+        '''
+        for vert in self.vert_dict.values():
+            vert.color = 'white'
+
+    def find_route_dfs(self, start_data, end_data):
+        '''
+        Find if there exists a route between two nodes
+        '''
+
+        # Ensure both nodes are in graph
+        if not (start_data in self.vert_dict.keys() and \
+                end_data in self.vert_dict.keys()):
+            err_msg = 'start data and end data both need to be in graph!'
+            raise ValueError(err_msg)
+
+        # Init variables
+        found = False
+        start_node = self.vert_dict[start_data]
+        children = start_node.get_connections()
+
+        # If there are no children or we visited the node already, return false
+        if len(children) == 0 or start_node.color != 'white':
+            return False
+        # Mark node as visited ('grey')
+        start_node.color = 'grey'
+
+        # Iterate through all node children, and search depth recursively
+        for child in children:
+            # If we found end_data key, return True
+            if child.key == end_data:
+                return True
+            # Otherwise, recursively search downward
+            found = self.find_route_dfs(child.key, end_data)
+            # If we found it on that downward path, break from loop
+            if found:
+                break
+
+        # Return result of search
+        return found
+
     def __contains__(self, key):
         '''
         Enable in operator to check graph
