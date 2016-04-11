@@ -19,7 +19,7 @@ def subsets_reduce(input_set):
 
 def subsets(input_set):
     '''
-    Return all subsets of a given set by returning a generator 
+    Return all subsets of a given set by returning a generator
     '''
 
     # Init list set

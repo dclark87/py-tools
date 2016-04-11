@@ -52,5 +52,53 @@ class GraphTreesUtilsTestCase(unittest.TestCase):
         tree_proper = utils.verify_tree_property(bin_tree)
         self.assertTrue(tree_proper)
 
+    def test_llists_from_bst(self):
+        '''
+        Test the llists_from_bst function
+        '''
+
+        # Import packages
+        from pytools.graphs_trees import trees, utils
+        from pytools.linked_lists import linked_lists
+
+        # Init BST
+        bst = trees.BinarySearchTree(12, 'brady')
+        bst.insert(8, 'oldkobe')
+        bst.insert(24, 'newkobe')
+        bst.insert(21, 'kg')
+        bst.insert(2, 'bigsmooth')
+        bst.insert(11, 'bledsoe')
+        bst.insert(87, 'gronk')
+
+        # Init linked lists
+        llist1 = linked_lists.LinkedList()
+        llist1.insert('brady')
+
+        llist2 = linked_lists.LinkedList()
+        llist2.insert('oldkobe')
+        llist2.insert('newkobe')
+
+        llist3 = linked_lists.LinkedList()
+        llist3.insert('kg')
+        llist3.insert('gronk')
+        llist3.insert('bigsmooth')
+        llist3.insert('bledsoe')
+
+        llists2 = [llist1, llist2, llist3]
+
+        # Call function
+        llists = utils.llists_from_bst(bst)
+
+        # Verify contents
+        for idx, llist in enumerate(llists):
+            llist2 = llists2[idx]
+            node = llist.head
+            node2 = llist2.head
+            while node:
+                self.assertEqual(node.data, node2.data)
+                node = node.next_node
+                node2 = node2.next_node
+
+
 if __name__ == '__main__':
     unittest.main()

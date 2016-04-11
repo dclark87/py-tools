@@ -165,3 +165,49 @@ def binary_tree_from_arr(arr, start, end):
 
     # Return completed tree node
     return tree_node
+
+
+def llists_from_bst(bst):
+    '''
+    Create a linked list for all of the nodes at each depth in the
+    BinarySearchTree
+    '''
+
+    # Import packages
+    from pytools.graphs_trees import trees
+    from pytools.linked_lists import linked_lists
+
+    # Error checking
+    if not bst or not isinstance(bst, trees.BinarySearchTree):
+        return []
+
+    # Init variables
+    llists = []
+    llist = linked_lists.LinkedList()
+
+    # Populate first linked list from root
+    llist.insert(bst)
+    llists.append(llist)
+
+    # Iterate through llists
+    for llist in llists:
+        node = llist.head
+        llist2 = linked_lists.LinkedList()
+        while node:
+            if node.data.left_child:
+                llist2.insert(node.data.left_child)
+            if node.data.right_child:
+                llist2.insert(node.data.right_child)
+            node = node.next_node
+        if not llist2.head:
+            break
+        llists.append(llist2)
+
+    # Convert linked lists of bst's to values
+    for llist in llists:
+        node = llist.head
+        while node:
+            node.data = node.data.value
+            node = node.next_node
+
+    return llists
