@@ -168,7 +168,7 @@ class Trie(object):
                 char = prefix[0]
                 # As long as sub trie char matches
                 if child.char == char:
-                    # If the child is a lead and it's the last char of
+                    # If the child is a leaf and it's the last char of
                     # prefix, return
                     if child.is_leaf and len(prefix) == 1:
                         sub_char = child.char
@@ -350,7 +350,7 @@ class BinarySearchTree(object):
         if not (curr_node.left_child or curr_node.right_child):
             # If it's not the root node
             if curr_node.parent:
-                if curr_node == curr_node.parent.left_child:
+                if curr_node.is_left_child:
                     curr_node.parent.left_child = None
                 else:
                     curr_node.parent.right_child = None

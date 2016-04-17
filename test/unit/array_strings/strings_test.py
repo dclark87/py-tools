@@ -243,6 +243,29 @@ class CheckAnagramsTestCase(unittest.TestCase):
         self.assertFalse(arent_anagrams2)
 
 
+class PalindromesTestCase(unittest.TestCase):
+    '''
+    TestCase for the strings.py module
+    '''
+
+    def test_largest_palindrome(self):
+        '''
+        Check the find_largest_palindrome functions are working
+        properly
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import find_largest_palindrome,\
+                                                   find_largest_palindrome2
+
+        # Double for loop implementation
+        largest = find_largest_palindrome('sfracecardfa')
+        self.assertEqual(largest, 'racecar')
+        # While loop implementation
+        largest = find_largest_palindrome2('sfracecardfa')
+        self.assertEqual(largest, 'racecar')
+
+
 # Run unittests via main executable
 if __name__ == '__main__':
     unittest.main()

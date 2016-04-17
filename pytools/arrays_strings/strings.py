@@ -44,6 +44,7 @@ def check_unique_chars(input_str):
     # Return flag
     return is_unique
 
+
 def check_unique_chars2(input_str):
     '''
     Function to check if string is composed of all unique characters
@@ -216,3 +217,73 @@ def check_anagrams(str1, str2):
         return True
     else:
         return False
+
+
+def find_largest_palindrome(in_str):
+    '''
+    Function to find the largest palindrome in a given string using
+    double for loop
+
+    Parameters
+    ----------
+    in_str : string
+        string to find palindrome in
+
+    Returns
+    -------
+    largest : string
+        the largest palindrome from in_str
+    '''
+
+    # Init variables
+    largest = ''
+
+    # For each start char
+    for start, _ in enumerate(in_str):
+        # For every other char
+        for end, _ in enumerate(in_str):
+            # Grab substring and reverse it
+            substr = in_str[start:end+1]
+            revstr = substr[::-1]
+            # If it is equal to its reverse and its length is bigger
+            # than before
+            if substr == revstr and len(substr) > len(largest):
+                largest = substr
+
+    # Return largest found
+    return largest
+
+
+def find_largest_palindrome2(in_str):
+    '''
+    Function to find the largest palindrome in a given string using
+    while loop
+
+    Parameters
+    ----------
+    in_str : string
+        string to find palindrome in
+
+    Returns
+    -------
+    largest : string
+        the largest palindrome from in_str
+    '''
+
+    # Init variables
+    largests = []
+    largest = in_str
+    i = 0
+
+    while i < len(in_str):
+        if largest != largest[::-1]:
+            largest = largest[:-1]
+            if len(largest) < 2:
+                i += 1
+                largest = in_str[i:]
+        else:
+            largests.append(largest)
+            i += 1
+            largest = in_str[i:]
+
+    return max(largests, key=len)
