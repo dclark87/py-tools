@@ -56,3 +56,7 @@ target/
 # Eclipse
 .project
 .pydevproject
+
+# IntelliJ
+.idea
+*.iml
