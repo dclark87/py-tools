@@ -5,3 +5,5 @@
 '''
 This module contains sub-modules for testing the pytools package
 '''
+
+from . import test_pytools
