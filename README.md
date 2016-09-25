@@ -1,7 +1,7 @@
 # py-tools
 http://dclark87.github.io/py-tools/
 
-This repository contains the Python package pytools. The package contains modules with various useful tools.
+This repository contains the Python package pytools. The package contains modules with various useful tools for Python.
 
 ## pytools contents
 
