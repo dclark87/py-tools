@@ -1,7 +1,30 @@
-# py-tools
+===============================
+pytools
+===============================
+
+
+.. image:: https://img.shields.io/pypi/v/py-tools.svg
+        :target: https://pypi.python.org/pypi/py-tools
+
+.. image:: https://img.shields.io/travis/dclark87/py-tools.svg
+        :target: https://travis-ci.org/dclark87/py-tools
+
+.. image:: https://readthedocs.org/projects/py-tools/badge/?version=latest
+        :target: https://py-tools.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
+.. image:: https://pyup.io/repos/github/dclark87/py-tools/shield.svg
+     :target: https://pyup.io/repos/github/dclark87/py-tools/
+     :alt: Updates
+
+
+py-tools
 http://dclark87.github.io/py-tools/
 
 This repository contains the Python package pytools. The package contains modules with various useful tools for Python.
+
+* Free software: MIT license
+* Documentation: https://py-tools.readthedocs.io.
 
 ## pytools contents
 
@@ -33,3 +56,15 @@ Modules related to testing (unit, integration, regression, etc) of the pytools p
 ### unit
 Modules related to unit testing of the pytools package. The file hierarchy follows that of the pytools package for testing of the respective modules
 
+Features
+--------
+
+* TODO
+
+Credits
+---------
+
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
