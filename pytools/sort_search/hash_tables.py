@@ -7,7 +7,6 @@ This module contains functions to solve problems related to string
 manipulation and testing
 '''
 
-
 class HashTable(object):
     '''
     Implement a hash table that stores key/value pairs and provides

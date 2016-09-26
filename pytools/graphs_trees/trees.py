@@ -7,7 +7,6 @@ This module contains functions to solve problems related to trees
 data structures
 '''
 
-
 class BinaryTree(object):
     '''
     Tree class implemented using recursion

@@ -6,7 +6,6 @@
 This module contains a function to find all permutations of a string
 '''
 
-
 def permutations(in_str):
     '''
     Create a list of all the permutations of a string

@@ -275,15 +275,22 @@ def find_largest_palindrome2(in_str):
     largest = in_str
     i = 0
 
+    # While the beg index less than length of input
     while i < len(in_str):
+        # No palindrome
         if largest != largest[::-1]:
+            # Take off last char
             largest = largest[:-1]
+            # If its only 1 char
             if len(largest) < 2:
+                # Increment beg index and take off beg char
                 i += 1
                 largest = in_str[i:]
+        # Found palindrome
         else:
             largests.append(largest)
             i += 1
             largest = in_str[i:]
 
+    # Return longest palindrome
     return max(largests, key=len)

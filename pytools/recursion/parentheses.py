@@ -7,7 +7,6 @@ This module contains functions to return the number of valid
 parentheses pairs given a number of pairs
 '''
 
-
 def _pairs(left, right=None):
     '''
     '''

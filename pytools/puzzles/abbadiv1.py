@@ -7,7 +7,6 @@ This module contains the ABBADiv1 class problem and solution from
 Topcoder.com
 '''
 
-
 class ABBADiv1(object):
     '''
     Mandatory class definition for problem
@@ -34,4 +33,4 @@ class ABBADiv1(object):
                 initial_xfm = (initial_xfm + 'B')[::-1]
             else:
                 return 'Impossible'
-        return "Possible"
+        return 'Possible'

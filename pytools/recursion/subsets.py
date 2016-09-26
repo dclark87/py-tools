@@ -7,7 +7,6 @@ This module contains functions to return all of the subsets of a given
 set
 '''
 
-
 def subsets_reduce(input_set):
     '''
     Reduce function method for returning all subsets of a set

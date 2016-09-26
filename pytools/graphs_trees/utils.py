@@ -8,7 +8,6 @@ This module contains utilities to solve problems related to graphs and
 trees
 '''
 
-
 def _get_max_height(tree):
     '''
     Function to determine the maximum height between the root and leaf
