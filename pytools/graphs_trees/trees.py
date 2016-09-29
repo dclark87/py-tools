@@ -31,7 +31,7 @@ class BinaryTree(object):
         rootval : object (optional); default=None
             if None, inserts the new subtree as the left child of the
             root of the entire tree, if specified, it searches the tree
-            for the subtree whos root value = rootval and inserts there
+            for the subtree whose root value = rootval and inserts there
         '''
 
         # Init new tree
@@ -114,7 +114,8 @@ class Trie(object):
         # Test for valid input
         if char:
             if not (isinstance(char, str) and len(char) == 1):
-                err_msg = 'Input char: %s must be a string of length 1!' % str(char)
+                err_msg = 'Input char: %s must be a string of length 1!' %\
+                          str(char)
                 raise ValueError(err_msg)
 
         # Populate contents
