@@ -266,6 +266,28 @@ class PalindromesTestCase(unittest.TestCase):
         self.assertEqual(largest, 'racecar')
 
 
+class FindPermutationsTestCase(unittest.TestCase):
+    '''
+    TestCase for the strings.py module
+    '''
+
+    def test_find_permutations(self):
+        '''
+        Test the find permutations function
+        '''
+
+        # Import packages
+        from pytools.arrays_strings.strings import find_permutations
+
+        str1 = 'ab'
+        out1 = set(['ab', 'ba'])
+        self.assertEqual(out1, set(find_permutations(str1)))
+
+        str2 = 'abc'
+        out2 = set(['abc', 'bac', 'bca', 'cab', 'cba', 'acb'])
+        self.assertEqual(out2, set(find_permutations(str2)))
+
+
 # Run unittests via main executable
 if __name__ == '__main__':
     unittest.main()

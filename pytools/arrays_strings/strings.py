@@ -294,3 +294,32 @@ def find_largest_palindrome2(in_str):
 
     # Return longest palindrome
     return max(largests, key=len)
+
+
+def find_permutations(in_str):
+    '''
+    Find all possible permutations of string
+    '''
+
+    # Base case
+    if len(in_str) < 2:
+        return [in_str]
+
+    # Recursively call until we get last char only
+    prevs = find_permutations(in_str[1:])
+    nexts = []
+
+    # For each previous permutation found
+    for i in xrange(len(prevs)):
+        prev = prevs[i]
+        # Put first char of passed in str in each location of prev perm
+        for j in xrange(len(in_str)):
+            new_str = prev[:j] + in_str[0] + prev[j:]
+            # If we haven't already seen it, add it to next perms out list
+            if new_str not in nexts:
+                nexts.append(new_str)
+
+    # Return next level permutations
+    return nexts
+
+
