@@ -120,3 +120,54 @@ def quick_sort(input_arr):
 
     # Return merged and sorted array
     return output_arr
+
+
+def insertion_sort_end(input_arr):
+    '''
+    Insertion sort with array sorted except for last element at end
+    (no binary search, linear time approach)
+
+    :param input_arr: sorted input array except for last element
+    :return: sorted input array
+    '''
+
+    # Edge case, one element already sorted
+    if len(input_arr) < 2:
+        print input_arr
+        return input_arr
+
+    # Init variables and backtrack
+    new = input_arr[-1]
+    last = len(input_arr)-2
+    while new < input_arr[last] and last > -1:
+        input_arr[last+1] = input_arr[last]
+        last -= 1
+        print(input_arr)
+
+    # Insert new number into array
+    input_arr[last+1] = new
+    print(input_arr)
+
+    # Return sorted array
+    return input_arr
+
+
+def insertion_sort(input_arr):
+    '''
+    Insertion sort method of an unsorted array
+
+    :param input_arr: unsorted array
+    :return: sorted array
+    '''
+
+    i = 1
+    for inum in input_arr[1:]:
+        tmp = inum
+        j = i-1
+        while tmp < input_arr[j] and j > -1:
+            input_arr[j+1] = input_arr[j]
+            j -= 1
+        input_arr[j+1] = tmp
+        i += 1
+
+    return input_arr

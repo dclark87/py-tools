@@ -241,7 +241,7 @@ def find_largest_palindrome(in_str):
     # For each start char
     for start, _ in enumerate(in_str):
         # For every other char
-        for end, _ in enumerate(in_str):
+        for end, _ in enumerate(in_str[start:]):
             # Grab substring and reverse it
             substr = in_str[start:end+1]
             revstr = substr[::-1]
@@ -252,6 +252,21 @@ def find_largest_palindrome(in_str):
 
     # Return largest found
     return largest
+
+
+def palindrome(in_str):
+    if len(in_str) < 2:
+        return in_str
+
+    long = in_str[0]
+    for i in xrange(0, len(in_str)):
+        j = 1+2
+        if j < len(in_str):
+            pal = in_str[i:j]
+            while pal == pal[::-1]:
+                long = pal
+                j += 1
+                pal = in_str[i:j]
 
 
 def find_largest_palindrome2(in_str):

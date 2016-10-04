@@ -3,7 +3,7 @@
 # Author: Daniel Clark, 2016
 
 '''
-This module contains functions to solve problems related to string
+This module contains functions to solve problems related to hash table
 manipulation and testing
 '''
 

@@ -256,10 +256,11 @@ class PalindromesTestCase(unittest.TestCase):
 
         # Import packages
         from pytools.arrays_strings.strings import find_largest_palindrome,\
-                                                   find_largest_palindrome2
+                                                   find_largest_palindrome2,\
+        palindrome
 
         # Double for loop implementation
-        largest = find_largest_palindrome('sfracecardfa')
+        largest = palindrome('sfracecardfa')
         self.assertEqual(largest, 'racecar')
         # While loop implementation
         largest = find_largest_palindrome2('sfracecardfa')

@@ -210,3 +210,89 @@ def llists_from_bst(bst):
             node = node.next_node
 
     return llists
+
+
+def pre_order_traverse(root):
+    '''
+    Traverse a binary tree in pre-order, that is:
+    root, left, right - using a stack
+
+    :param root:
+    :return:
+    '''
+
+    stack = [root]
+    out_str = ''
+
+    while len(stack) > 0:
+        node = stack.pop()
+        if node.right_child:
+            stack.append(node.right_child)
+        if node.left_child:
+            stack.append(node.left_child)
+        out_str += str(node.value) + ' '
+
+    return out_str
+
+
+def pre_order_recursive(root):
+    '''
+    Traverse a binary tree in pre-order, that is:
+    root, left, right - recursively
+
+    :param root:
+    :return:
+    '''
+
+    if not root:
+        return ''
+
+    out_str = str(root.value) + ' '
+
+    out_str += pre_order_recursive(root.left_child)
+    out_str += pre_order_recursive(root.right_child)
+
+    return out_str
+
+
+def post_order_traverse(root):
+    '''
+    Traverse the binary tree in post-order, that is:
+    left, right, root - recursively
+
+    :param root:
+    :return:
+    '''
+
+    if not root:
+        return ''
+
+    out_str = ''
+
+    out_str += post_order_traverse(root.left_child)
+    out_str += post_order_traverse(root.right_child)
+
+    out_str += str(root.value) + ' '
+
+    return out_str
+
+
+def in_order_traverse(root):
+    '''
+    Traverse the binary tree in in-order, that is:
+    left, root, right
+
+    :param root:
+    :return:
+    '''
+
+    if not root:
+        return ''
+
+    out_str = ''
+
+    out_str += in_order_traverse(root.left_child)
+    out_str += str(root.value) + ' '
+    out_str += in_order_traverse(root.right_child)
+
+    return out_str

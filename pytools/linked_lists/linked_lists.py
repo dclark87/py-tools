@@ -132,3 +132,61 @@ class LinkedList(object):
             next_node = tmp
 
         self.head = curr_node
+
+
+def linked_lists_equal(a_head, b_head):
+    '''
+    Test if two linked lists have the same contents
+
+    :param a_head:
+    :param b_head:
+    :return:
+    '''
+
+    while a_head.next_node is not None:
+        if a_head.data != b_head.data:
+            return False
+        a_head = a_head.next_node
+        b_head = b_head.next_node
+
+    return True
+
+
+def merge_sorted_lists(a_head, b_head):
+    '''
+    Merge two sorted linked lists into one
+
+    :param a_head:
+    :param b_head:
+    :return:
+    '''
+
+    if a_head is None:
+        return b_head
+    if b_head is None:
+        return a_head
+
+    merge = a_head
+    other = b_head
+
+    if b_head.data < a_head.data:
+        merge = b_head
+        other = a_head
+
+    merge_head = merge
+    while True:
+        if merge.next_node is None:
+            merge.next_node = other
+            break
+        if other is None:
+            break
+        if merge.next_node.data > other.data:
+            mtmp = merge.next_node
+            otmp = other.next_node
+            merge.next_node = other
+            other.next_node = mtmp
+            other = otmp
+
+        merge = merge.next_node
+
+    return merge_head
