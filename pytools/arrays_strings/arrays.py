@@ -40,3 +40,22 @@ def flips(q, n, mat):
                 q_moves.append(('row', True, right_sum))
 
 
+def flatten_list(arr, result=None):
+    '''
+    Flatten a list of lists, recursively
+
+    :param arr:
+    :param result:
+    :return:
+    '''
+
+    if result is None:
+        result = []
+
+    for x in arr:
+        if isinstance(x, list):
+            flatten_list(x, result)
+        else:
+            result.append(x)
+
+    return result

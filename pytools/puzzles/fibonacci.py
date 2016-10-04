@@ -45,7 +45,7 @@ def fibonacci(num):
 
 def fib(num):
     '''
-    Return the Fibonacci number for the integer provided, revursive
+    Return the Fibonacci number for the integer provided, recursive
 
     Parameters
     ----------
