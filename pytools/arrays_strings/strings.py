@@ -338,3 +338,26 @@ def find_permutations(in_str):
     return nexts
 
 
+def find_valid_parentheses(in_str):
+    '''
+    Find if the input has a valid sequence of parentheses
+
+    :param in_str:
+    :return:
+    '''
+
+    pctr = 0
+    for char in in_str:
+        if char == '(':
+            pctr += 1
+        if char == ')':
+            if pctr == 0:
+                return False
+            else:
+                pctr -= 1
+    if pctr != 0:
+        return False
+    else:
+        return True
+
+
