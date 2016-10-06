@@ -144,6 +144,28 @@ class GraphTreesUtilsTestCase(unittest.TestCase):
         expected = '-4 0 3 9 12 21 23 24 '
         self.assertEqual(expected, out_str)
 
+    def test_max_depth(self):
+        '''
+        Find the maximum depth of a binary tree
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr)-1)
+
+        self.assertEqual(3, utils.max_depth(bin_tree))
+
+    def test_max_depth2(self):
+        '''
+        Find the maximum depth of a binary tree
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr) - 1)
+
+        self.assertEqual(3, utils.max_depth2(bin_tree))
+
 
 if __name__ == '__main__':
     unittest.main()

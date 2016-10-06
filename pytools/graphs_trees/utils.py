@@ -296,3 +296,63 @@ def in_order_traverse(root):
     out_str += in_order_traverse(root.right_child)
 
     return out_str
+
+
+def _max_depth(node, cnt, paths):
+    '''
+    Recursive function to find the maximum depth of a binary tree
+
+    :param node:
+    :param cnt:
+    :param paths:
+    :return:
+    '''
+
+    if not node:
+        return
+    _max_depth(node.left_child, cnt+1, paths)
+    _max_depth(node.right_child, cnt+1, paths)
+    if not (node.left_child or node.right_child):
+        paths.append(cnt)
+
+
+def max_depth(node):
+    '''
+    Find the maximum depth of a binary tree
+
+    :param node:
+    :return:
+    '''
+
+    paths = []
+    _max_depth(node, 0, paths)
+    return max(paths)
+
+
+def max_depth2(node):
+    '''
+    Find the maximum depth of a binary tree, iteratively
+
+    :param node:
+    :return:
+    '''
+
+    if not node:
+        return 0
+    stack = [node]
+    max = 0
+    dstack = [0]
+
+    while len(stack) > 0:
+        node = stack.pop()
+        depth = dstack.pop()
+        if depth > max:
+            max = depth
+        if node.left_child:
+            stack.append(node.left_child)
+            dstack.append(depth+1)
+        if node.right_child:
+            stack.append(node.right_child)
+            dstack.append(depth+1)
+
+    return max
