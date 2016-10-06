@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # py-tools documentation build configuration file, created by
-# sphinx-quickstart on Wed Oct  5 23:55:40 2016.
+# sphinx-quickstart on Thu Oct  6 00:09:31 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -16,9 +16,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- General configuration ------------------------------------------------
 
@@ -29,7 +29,10 @@
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
