@@ -10,10 +10,12 @@ string values
 
 def json_parse(json, key_str, old_str, new_str):
     '''
+    Recursively parse a json object to replace old string with the new
+    string based on a dot-separated key string path
 
-    :param json:
-    :param key_str:
-    :param old_str:
+    :param json: a dict, list, string, or int object to parse
+    :param key_str: a dot-separated string
+    :param old_str: old string value to replace
     :param new_str:
     :return:
     '''
