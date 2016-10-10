@@ -29,41 +29,22 @@ def merge_sort(input_arr):
     # Check for numeric types
     _check_numeric(input_arr)
 
-    len_arr = len(input_arr)
-    sorted_arr = []
-    if len_arr > 2:
-        mid = len_arr//2
-        left_sorted = merge_sort(input_arr[:mid])
-        right_sorted = merge_sort(input_arr[mid:])
-        # Compare two array elements and sort
-        left_idx = right_idx = 0
-        while len(sorted_arr) < (len(left_sorted) + len(right_sorted)):
-            left_el = left_sorted[left_idx]
-            right_el = right_sorted[right_idx]
-            if left_el <= right_el:
-                sorted_arr.append(left_el)
-                left_idx += 1
-                if left_idx == len(left_sorted):
-                    sorted_arr.extend(right_sorted[right_idx:])
-            else:
-                sorted_arr.append(right_el)
-                right_idx += 1
-                if right_idx == len(right_sorted):
-                    sorted_arr.extend(left_sorted[left_idx:])
-    # 2 or less elements
-    else:
-        # 1 element, just append
-        if len_arr == 1:
-            sorted_arr.append(input_arr[0])
+    l = len(input_arr)
+    if l < 2:
+        return input_arr
+    left = merge_sort(input_arr[:l/2])
+    right = merge_sort(input_arr[l/2:])
+    merged = []
+    while len(left) > 0 and len(right) > 0:
+        if left[0] < right[0]:
+            merged.append(left[0])
+            del left[0]
         else:
-            if input_arr[0] > input_arr[1]:
-                smaller = input_arr[1]
-                larger = input_arr[0]
-            else:
-                smaller = input_arr[0]
-                larger = input_arr[1]
-            sorted_arr.append(smaller)
-            sorted_arr.append(larger)
+            merged.append(right[0])
+            del right[0]
+    merged.extend(left)
+    merged.extend(right)
+    return merged
 
     # Return the sorted array
     return sorted_arr
