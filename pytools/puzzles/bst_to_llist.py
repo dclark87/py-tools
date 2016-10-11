@@ -17,6 +17,8 @@ class DLNode(object):
 
 def bst_to_llist(root):
     '''
+    Function to build a doubly-linked list, sorted, and circular from a
+    binary search tree, via an in-order traversal (non-recursive) in O(n) time
 
     :param root:
     :return:
