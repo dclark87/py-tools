@@ -241,7 +241,7 @@ def find_largest_palindrome(in_str):
     # For each start char
     for start, _ in enumerate(in_str):
         # For every other char
-        for end, _ in enumerate(in_str):
+        for end, _ in enumerate(in_str[start:]):
             # Grab substring and reverse it
             substr = in_str[start:end+1]
             revstr = substr[::-1]
@@ -252,6 +252,21 @@ def find_largest_palindrome(in_str):
 
     # Return largest found
     return largest
+
+
+def palindrome(in_str):
+    if len(in_str) < 2:
+        return in_str
+
+    long = in_str[0]
+    for i in xrange(0, len(in_str)):
+        j = 1+2
+        if j < len(in_str):
+            pal = in_str[i:j]
+            while pal == pal[::-1]:
+                long = pal
+                j += 1
+                pal = in_str[i:j]
 
 
 def find_largest_palindrome2(in_str):
@@ -275,15 +290,74 @@ def find_largest_palindrome2(in_str):
     largest = in_str
     i = 0
 
+    # While the beg index less than length of input
     while i < len(in_str):
+        # No palindrome
         if largest != largest[::-1]:
+            # Take off last char
             largest = largest[:-1]
+            # If its only 1 char
             if len(largest) < 2:
+                # Increment beg index and take off beg char
                 i += 1
                 largest = in_str[i:]
+        # Found palindrome
         else:
             largests.append(largest)
             i += 1
             largest = in_str[i:]
 
+    # Return longest palindrome
     return max(largests, key=len)
+
+
+def find_permutations(in_str):
+    '''
+    Find all possible permutations of string
+    '''
+
+    # Base case
+    if len(in_str) < 2:
+        return [in_str]
+
+    # Recursively call until we get last char only
+    prevs = find_permutations(in_str[1:])
+    nexts = []
+
+    # For each previous permutation found
+    for i in xrange(len(prevs)):
+        prev = prevs[i]
+        # Put first char of passed in str in each location of prev perm
+        for j in xrange(len(in_str)):
+            new_str = prev[:j] + in_str[0] + prev[j:]
+            # If we haven't already seen it, add it to next perms out list
+            if new_str not in nexts:
+                nexts.append(new_str)
+
+    # Return next level permutations
+    return nexts
+
+
+def find_valid_parentheses(in_str):
+    '''
+    Find if the input has a valid sequence of parentheses
+
+    :param in_str:
+    :return:
+    '''
+
+    pctr = 0
+    for char in in_str:
+        if char == '(':
+            pctr += 1
+        if char == ')':
+            if pctr == 0:
+                return False
+            else:
+                pctr -= 1
+    if pctr != 0:
+        return False
+    else:
+        return True
+
+

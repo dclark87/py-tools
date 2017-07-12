@@ -64,3 +64,55 @@ def a_merge_b(a_arr, b_arr):
 
     # Return a_arr
     return a_arr
+
+
+def rot_arr_search(rot_arr, elem):
+    '''
+    Function to find an element in an originally sorted, but rotated
+    array in O(logn)
+
+    Parameters
+    ----------
+    rot_arr : list
+        a list of numbers that are sorted but rotated
+    elem : int or float
+        element of list to find
+
+    Returns
+    -------
+    pos : int
+        position of element in rot_arr
+    '''
+
+    # Init variables
+    low = 0
+    high = len(rot_arr)-1
+
+    # While the extrema indices are in order
+    while low <= high:
+        mid = (high+low)//2
+        # If we found right element
+        if rot_arr[mid] == elem:
+            # Return its index
+            return mid
+        # Othwerwise if the low elem <= high elem (in sorted section)
+        elif rot_arr[low] <= rot_arr[high]:
+            # If element > mid, move low up to mid+1
+            if elem > rot_arr[mid]:
+                low = mid + 1
+            # If elem >= low elem, move high to mid-1
+            elif elem >= rot_arr[low]:
+                high = mid - 1
+            else:
+                low = mid + 1
+        # If element is less than mid, move high to mid-1
+        elif elem < rot_arr[mid]:
+            high = mid - 1
+        # If element is <= high, move low to mid+1
+        elif elem <= rot_arr[high]:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    # While loop terminated without finding elem, raise error
+    raise KeyError('elem: %s not found!' % str(elem))

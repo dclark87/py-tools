@@ -8,7 +8,6 @@ This module contains utilities to solve problems related to graphs and
 trees
 '''
 
-
 def _get_max_height(tree):
     '''
     Function to determine the maximum height between the root and leaf
@@ -211,3 +210,149 @@ def llists_from_bst(bst):
             node = node.next_node
 
     return llists
+
+
+def pre_order_traverse(root):
+    '''
+    Traverse a binary tree in pre-order, that is:
+    root, left, right - using a stack
+
+    :param root:
+    :return:
+    '''
+
+    stack = [root]
+    out_str = ''
+
+    while len(stack) > 0:
+        node = stack.pop()
+        if node.right_child:
+            stack.append(node.right_child)
+        if node.left_child:
+            stack.append(node.left_child)
+        out_str += str(node.value) + ' '
+
+    return out_str
+
+
+def pre_order_recursive(root):
+    '''
+    Traverse a binary tree in pre-order, that is:
+    root, left, right - recursively
+
+    :param root:
+    :return:
+    '''
+
+    if not root:
+        return ''
+
+    out_str = str(root.value) + ' '
+
+    out_str += pre_order_recursive(root.left_child)
+    out_str += pre_order_recursive(root.right_child)
+
+    return out_str
+
+
+def post_order_traverse(root):
+    '''
+    Traverse the binary tree in post-order, that is:
+    left, right, root - recursively
+
+    :param root:
+    :return:
+    '''
+
+    if not root:
+        return ''
+
+    out_str = ''
+
+    out_str += post_order_traverse(root.left_child)
+    out_str += post_order_traverse(root.right_child)
+
+    out_str += str(root.value) + ' '
+
+    return out_str
+
+
+def in_order_traverse(root):
+    '''
+    Traverse the binary tree in in-order, that is:
+    left, root, right
+
+    :param root:
+    :return:
+    '''
+
+    if not root:
+        return ''
+
+    out_str = ''
+
+    out_str += in_order_traverse(root.left_child)
+    out_str += str(root.value) + ' '
+    out_str += in_order_traverse(root.right_child)
+
+    return out_str
+
+
+def _max_depth(node, cnt, paths):
+    '''
+    Recursive function to find the maximum depth of a binary tree
+
+    :param node:
+    :param cnt:
+    :param paths:
+    :return:
+    '''
+
+    if not node:
+        return
+    _max_depth(node.left_child, cnt+1, paths)
+    _max_depth(node.right_child, cnt+1, paths)
+    if not (node.left_child or node.right_child):
+        paths.append(cnt)
+
+
+def max_depth(node):
+    '''
+    Find the maximum depth of a binary tree
+
+    :param node:
+    :return:
+    '''
+
+    paths = []
+    _max_depth(node, 0, paths)
+    return max(paths)
+
+
+def max_depth2(node):
+    '''
+    Find the maximum depth of a binary tree, iteratively
+
+    :param node:
+    :return:
+    '''
+
+    if not node:
+        return 0
+    stack = [node]
+    max = 0
+    dstack = [0]
+
+    while len(stack) > 0:
+        node = stack.pop()
+        depth = dstack.pop()
+        if depth > max:
+            max = depth
+        if node.left_child:
+            stack.append(node.left_child)
+            dstack.append(depth+1)
+        if node.right_child:
+            stack.append(node.right_child)
+            dstack.append(depth+1)
+
+    return max

@@ -9,6 +9,7 @@ Unit test module to perform testing on graph_trees/utils module
 # Import packages
 import unittest
 
+from pytools.graphs_trees import utils
 
 class GraphTreesUtilsTestCase(unittest.TestCase):
     '''
@@ -30,7 +31,6 @@ class GraphTreesUtilsTestCase(unittest.TestCase):
 
         # Import packages
         import math
-        from pytools.graphs_trees import utils
 
         # Min height should be log_2(n)
         min_height = int(math.ceil(math.log(len(self.sorted_arr), 2)))
@@ -44,9 +44,6 @@ class GraphTreesUtilsTestCase(unittest.TestCase):
         graph_trees/utils module
         '''
 
-        # Import packages
-        from pytools.graphs_trees import utils
-
         # Min height should be log_2(n)
         bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0, len(self.sorted_arr)-1)
         tree_proper = utils.verify_tree_property(bin_tree)
@@ -58,7 +55,7 @@ class GraphTreesUtilsTestCase(unittest.TestCase):
         '''
 
         # Import packages
-        from pytools.graphs_trees import trees, utils
+        from pytools.graphs_trees import trees
         from pytools.linked_lists import linked_lists
 
         # Init BST
@@ -98,6 +95,76 @@ class GraphTreesUtilsTestCase(unittest.TestCase):
                 self.assertEqual(node.data, node2.data)
                 node = node.next_node
                 node2 = node2.next_node
+
+    def test_pre_order_traverse(self):
+        '''
+        Test the pre-order traversal function
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr)-1)
+        out_str = utils.pre_order_traverse(bin_tree)
+        expected = '9 0 -4 3 21 12 23 24 '
+        self.assertEqual(expected, out_str)
+
+    def test_pre_order_recursive(self):
+        '''
+        Test the pre-order traversal function
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr) - 1)
+        out_str = utils.pre_order_recursive(bin_tree)
+        expected = '9 0 -4 3 21 12 23 24 '
+        self.assertEqual(expected, out_str)
+
+    def test_post_order_traverse(self):
+        '''
+        Test the pre-order traversal function
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr) - 1)
+        out_str = utils.post_order_traverse(bin_tree)
+        expected = '-4 3 0 12 24 23 21 9 '
+        self.assertEqual(expected, out_str)
+
+    def test_in_order_traverse(self):
+        '''
+        Test the pre-order traversal function
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr) - 1)
+        out_str = utils.in_order_traverse(bin_tree)
+        expected = '-4 0 3 9 12 21 23 24 '
+        self.assertEqual(expected, out_str)
+
+    def test_max_depth(self):
+        '''
+        Find the maximum depth of a binary tree
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr)-1)
+
+        self.assertEqual(3, utils.max_depth(bin_tree))
+
+    def test_max_depth2(self):
+        '''
+        Find the maximum depth of a binary tree
+        :return:
+        '''
+
+        bin_tree = utils.binary_tree_from_arr(self.sorted_arr, 0,
+                                              len(self.sorted_arr) - 1)
+
+        self.assertEqual(3, utils.max_depth2(bin_tree))
 
 
 if __name__ == '__main__':

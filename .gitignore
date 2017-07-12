@@ -60,3 +60,6 @@ target/
 # IntelliJ
 .idea
 *.iml
+
+# MacOSX
+.DS_Store

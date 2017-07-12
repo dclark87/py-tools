@@ -6,6 +6,8 @@
 This package contains classes, functions, and scripts for Python
 '''
 
+__version__ = '0.1.0'
+
 # Import packages
 import arrays_strings
 import graphs_trees

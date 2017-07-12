@@ -3,10 +3,9 @@
 # Author: Daniel Clark, 2016
 
 '''
-This module contains functions to solve problems related to string
+This module contains functions to solve problems related to hash table
 manipulation and testing
 '''
-
 
 class HashTable(object):
     '''
@@ -57,8 +56,8 @@ class HashTable(object):
         hash_index = orig_hash_index
 
         # While the slot is filled and containing another key
-        while self.key_slots[hash_index] != None and \
-            self.key_slots[hash_index] != key:
+        while self.key_slots[hash_index] is not None and \
+                self.key_slots[hash_index] != key:
 
             # Get rehashed index
             hash_index = self._rehash_function(hash_index)

@@ -7,7 +7,6 @@ This module contains a function to count the possible paths through a
 grid
 '''
 
-
 def count_paths(n, x, y):
     '''
     Function to count the total number of paths in an nxn grid one can
