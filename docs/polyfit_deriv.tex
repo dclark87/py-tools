@@ -1,0 +1,181 @@
+%----------------------------------------------------------------------
+% ml-tools documentation
+% Polynomial fit derivation
+% Author: Daniel Clark
+%
+% References:
+% Pattern Recognition and Machine Learning - Christopher Bishop
+%----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+% Document class, packages, and formatting
+%----------------------------------------------------------------------
+\documentclass{article}
+
+%% Packages
+\usepackage{fancyhdr}    % Required for custom headers
+\usepackage{lastpage}    % Required to determine the last page for the footer
+\usepackage{extramarks}  % Required for headers and footers
+\usepackage{graphicx}    % Allow figures to be scaled and inserted
+\usepackage{float}       % Allow figures to be inserted immediately
+%\usepackage{indentfirst} % Allow indentation of all paragraphs, including first, by default
+\usepackage{amsmath}     % Allow for extended math symbols library
+\usepackage{amssymb}     % allow for special math binary operator characters
+\usepackage{hyper ref}   % Hyperlinks
+\usepackage[all]{hypcap} % Go to top of the image in link
+\usepackage{amsfonts}    % Allow for extended fonts library
+\usepackage{dsfont}      % Allow for digit formatting for pulse equation
+\usepackage{upgreek}     % allow for variants on greek letters (e.g. tau)
+\usepackage{bm}          % allow for bold math symbols via \bm
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}    % code format listing
+\usepackage{xcolor}
+
+%% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.1in
+
+%% Set up the header and footer
+\pagestyle{fancy}
+\rhead{Daniel Clark} % Top right header
+\chead{} % Top center header
+\lhead{}
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of \pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+%% Other formatting
+
+%% Inputs
+
+%----------------------------------------------------------------------
+% Title Block
+%----------------------------------------------------------------------
+
+% Title
+\title{Polynomial fit derivation notes\\
+Used in \emph{polyfit.py}}
+
+% Author name
+\author{Daniel Clark}
+
+
+\begin{document}
+
+% Make the title, author name, date
+\maketitle
+
+%\newpage
+%\tableofcontents
+%\newpage
+%-----
+\section*{Polynomial curve-fitting}
+%-----
+Given a real-valued input variable $x$, we wish to predict a real-valued target variable $t$.
+\\\\
+We can fit a polynomial to an existing set of $N$ data points, with row vector inputs $\bm{x} \equiv (x_1, ..., x_n)$ and target variables $\bm{t} \equiv (t_1, ..., t_n) $. For a given input $x_n$
+% Polynomial fit y(x,w)
+\begin{align}
+    t_n \approx y(x_n, \mathbf{w}) = \sum_{j=0}^M w_j x_n^j,
+\end{align}
+where $\mathbf{w} \equiv (w_0, ..., w_M)^\top$ and $y(x_n, \mathbf{w})$ predicts the target $t_n$ using an $M+1$-dimensional vector of weights, corresponding to each term of the $M$-order polynomial (plus the line offset $w_0$). *Note that $y(x_n, \mathbf{w})$ is a nonlinear function of $x_n$, but a linear function of the coefficients $\{w_j\}$; these type of models are known as \emph{linear models}.
+\\\\
+These weights can be determined by minimizing an \emph{error function}, which measures the misfit between the approximation $y(x_n, \mathbf{w})$ and the training set for any given value of $\mathbf{w}$. A widely used error function is the sum-of-squares, measuring the sum of the distance-squared between the predicted point $y(x_n, \mathbf{w})$ and the actual target $t_n$, from $n=1, ..., N$.
+
+% Sum-of-squares error function E(w)
+\begin{align}
+    E(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N \hspace{1pt}\big[y(x_n, \mathbf{w}) - t_n\big]^2
+\end{align}
+
+The error function can be solved in closed form to find the optimal solution, $\mathbf{w}^*$, where $E(\mathbf{w}^*)$ is minimized.
+%-----
+\subsubsection*{Derivation}
+%-----
+Setting $y_n \equiv y(x_n, \mathbf{w})$, we have
+
+% Derive w*
+\begin{align*}
+    E(\mathbf{w}) &= \frac{1}{2}\sum_{n=1}^N \hspace{1pt} \big[y(x_n, \mathbf{w}) - t_n \big]^2 \\
+                  &= \frac{1}{2}\sum_{n=1}^N \hspace{1pt} \big[y_n - t_n \big]^2 \\
+                  &= \frac{1}{2}\sum_{n=1}^N \hspace{1pt} \big[y_n^2 - 2y_nt_n + t_n^2 \big] \\
+                  &= \frac{1}{2}\sum_{n=1}^N y_n^2 - \sum_{n=1}^Ny_nt_n + \frac{1}{2}\sum_{n=1}^Nt_n^2 \\
+                  &= \frac{1}{2}\sum_{n=1}^N y(x_n, \mathbf{w})y(x_n, \mathbf{w}) - \sum_{n=1}^Ny(x_n, \mathbf{w})t_n + \frac{1}{2}\sum_{n=1}^Nt_n^2
+\end{align*}
+
+Since $E(\mathbf{w})$ is a quadratic function of $\mathbf{w}$, its global minimum is found by setting its derivative with respect to $\mathbf{w}$ to 0. First, let`s take the partial derivative of $y(x_n, \mathbf{w})$ with respect to any component of $\mathbf{w}$, $w_i$
+
+% Deriv of y(x_n, w)
+\begin{align*}
+    \frac{\partial}{\partial w_i}y(x_n, \mathbf{w}) &= \frac{\partial}{\partial w_i} \sum_{j=0}^Mw_jx^j \\
+                                                    &= \frac{\partial}{\partial w_i} \bigg(... + w_{i-1}x^{i-1} + w_ix^i + w_{i+1}x^{i+1} + ... \bigg) \\
+                                                    &= ... + \frac{\partial}{\partial w_i}w_{i-1}x^{i-1} + \frac{\partial}{\partial w_i}w_ix^i + \frac{\partial}{\partial w_i}w_{i+1}x^{i+1} + ... \\
+                                                    &= ... + 0 + x^i + 0 + ... \\
+    \frac{\partial}{\partial w_i}y_n = \frac{\partial}{\partial w_i}y(x_n, \mathbf{w}) &= x^i
+\end{align*}
+
+And we can take the derivative of $y(x_n, \mathbf{w})y(x_n, \mathbf{w})$ using the product rule, where
+
+% Deriv of y(x_n, w) y(x_n, w)
+\begin{align*}
+    \frac{\partial}{\partial w_i} \big[y(x_n, \mathbf{w}) y(x_n, \mathbf{w}) \big] &= \frac{\partial}{\partial w_i}y(x_n, \mathbf{w}) \cdot y(x_n, \mathbf{w}) + y(x_n, \mathbf{w}) \cdot \frac{\partial}{\partial w_i}y(x_n, \mathbf{w}) \\
+                                                                                   &= 2 \frac{\partial}{\partial w_i} y(x_n, \mathbf{w}) \cdot y(x_n, \mathbf{w}) \\
+                                                                                   &= 2 x^i y(x_n, \mathbf{w})
+\end{align*}
+
+Finally, taking $\frac{\partial}{\partial w_i} E(\mathbf{w})$ and setting it equal to 0 (where we are using the sum rule, $(f + g)' = f' + g'$, to take the derivatives on the inside of the summations),
+
+% Deriv of E(w)
+\begin{align*}
+    \frac{\partial}{\partial w_i}E(x_n, \mathbf{w}^*) = 0 &= \frac{1}{2}\sum_{n=1}^N \frac{\partial}{\partial w_i} \big[y(x_n, \mathbf{w}^*)y(x_n, \mathbf{w}^*) \big] - \sum_{n=1}^N\frac{\partial}{\partial w_i}y(x_n, \mathbf{w}^*)t_n + \frac{1}{2}\sum_{n=1}^N\frac{\partial}{\partial w_i}t_n^2 \\
+                                                  0       &= \frac{1}{2}\sum_{n=1}^N 2x_n^i y(x_n, \mathbf{w}^*) - \sum_{n=1}^Nx_n^it_n + 0 \\
+                                                          &= \sum_{n=1}^N x_n^i y(x_n, \mathbf{w}^*) - \sum_{n=1}^Nx_n^it_n \\
+                                     \sum_{n=1}^Nx_n^it_n &= \sum_{n=1}^N x_n^i \sum_{j=0}^Mw_j^*x_n^j \\
+                                     \sum_{n=1}^Nx_n^it_n &= \sum_{n=1}^N \sum_{j=0}^Mw_j^*(x_n)^{i+j} \\
+                                     \sum_{n=1}^Nx_n^it_n &= \sum_{j=0}^Mw_j^*\sum_{n=1}^N(x_n)^{i+j}
+\end{align*}
+
+We can re-arrange the above and represent the equations with vectors and matrices in the form of $\mathbf{A}\mathbf{w} = \mathbf{b}$, where
+
+% Aw = b
+\begin{align*}
+    \sum_{j=0}^Mw_j^* \underbrace{\sum_{n=1}^N(x_n)^{i+j}}_{a_{ij}} &= \underbrace{\sum_{n=1}^Nx_n^it_n}_{b_i} \\
+    \sum_{j=0}^Ma_{ij} w_j^* &= b_i \\
+    \text{where $i$ are the vectors' index, from $0..M$}\rightarrow \mathbf{A} \mathbf{w}^* &= \mathbf{b} \\
+    \rightarrow \mathbf{w}^* &= \mathbf{A}^{-1}\mathbf{b}
+\end{align*}
+
+To solve this efficiently, we can use matrix algebra to create $\mathbf{A}$ and $\mathbf{b}$ using a $N\times M+1$ matrix $\mathbf{X}$, where
+
+% X => Aw = b
+\begin{align*}
+    \mathbf{X} =
+    \begin{bmatrix}
+        x_1^0 & x_1^1 & ... & x_1^M \\
+        x_2^0 & x_2^1 & ... & x_2^M \\
+        \vdots & \vdots & ... & \vdots \\
+        x_N^0 & x_N^1 & ... & x_N^M
+    \end{bmatrix}, &~\bm{t} =
+        \begin{bmatrix}
+            t_1 & ... & t_N
+        \end{bmatrix} \\
+        \text{and}~\mathbf{A} = \mathbf{X}^\top\mathbf{X}, &~\mathbf{b} = \bm{t}\mathbf{X}
+\end{align*}.
+
+
+There's also a problem when choosing the degree of the polynomial, $M$. A high $M$ can lead to over-fitting; we want to achieve a good \emph{generalization}.
+\\\\
+One way of testing the model is by comparison of $E(\mathbf{w}^*)$ across model parameters (e.g. size of $M$). A good way to incorparte different-sized datasets is via root-mean-squared error (RMS). With $E(\mathbf{w}^*) \equiv \frac{1}{2}\sum_{n=1}^N [y(x_n, \mathbf{w}^*) - t_n]^2$,
+
+% RMS
+\begin{align}
+    E_{RMS} &= \sqrt{2E(\mathbf{w}^*)/N}
+\end{align}
+
+\end{document}
