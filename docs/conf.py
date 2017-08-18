@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# py-tools documentation build configuration file, created by
+# pytools documentation build configuration file, created by
 # sphinx-quickstart on Thu Oct  6 00:09:31 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'py-tools'
+project = u'pytools'
 copyright = u'2016, Daniel Clark'
 author = u'Daniel Clark'
 
@@ -136,7 +136,7 @@ html_theme = 'alabaster'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'py-tools v0.1.0'
+# html_title = u'pytools v0.1.0'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -236,7 +236,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'py-toolsdoc'
+htmlhelp_basename = 'pytoolsdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -262,7 +262,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'py-tools.tex', u'py-tools Documentation',
+    (master_doc, 'pytools.tex', u'pytools Documentation',
      u'Daniel Clark', 'manual'),
 ]
 
@@ -304,7 +304,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'py-tools', u'py-tools Documentation',
+    (master_doc, 'pytools', u'pytools Documentation',
      [author], 1)
 ]
 
@@ -319,8 +319,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'py-tools', u'py-tools Documentation',
-     author, 'py-tools', 'One line description of project.',
+    (master_doc, 'pytools', u'pytools Documentation',
+     author, 'pytools', 'One line description of project.',
      'Miscellaneous'),
 ]
 

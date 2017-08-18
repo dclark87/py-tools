@@ -3,7 +3,7 @@
 
 '''
 This script runs all of the TestCases of all of the submodules within
-the py-tools/test package
+the pytools/test package
 '''
 
 # Import packages

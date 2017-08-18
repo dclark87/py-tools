@@ -13,10 +13,10 @@ to the local disk.
 from setuptools import find_packages, setup
 
 # Use disutils' setup function to install the package
-setup(name='py-tools',
+setup(name='pytools',
       version='0.0.6',
       description='Various Python utilities',
       author='Daniel Clark',
       author_email='danieljclark87@gmail.com',
-      url='https://github.com/dclark87/py-tools',
+      url='https://github.com/dclark87/pytools',
       packages=find_packages(exclude=['test*']))
