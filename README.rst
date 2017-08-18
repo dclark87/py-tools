@@ -1,18 +1,18 @@
 # pytools
 
-.. image:: https://img.shields.io/pypi/v/pytools.svg
-        :target: https://pypi.python.org/pypi/pytools
-
-.. image:: https://img.shields.io/travis/dclark87/pytools.svg
-        :target: https://travis-ci.org/dclark87/pytools
-
-.. image:: https://readthedocs.org/projects/pytools/badge/?version=latest
-        :target: https://pytools.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-.. image:: https://pyup.io/repos/github/dclark87/pytools/shield.svg
-     :target: https://pyup.io/repos/github/dclark87/pytools/
-     :alt: Updates
+#.. image:: https://img.shields.io/pypi/v/pytools.svg
+#        :target: https://pypi.python.org/pypi/pytools
+#
+# .. image:: https://img.shields.io/travis/dclark87/pytools.svg
+#         :target: https://travis-ci.org/dclark87/pytools
+#
+# .. image:: https://readthedocs.org/projects/pytools/badge/?version=latest
+#         :target: https://pytools.readthedocs.io/en/latest/?badge=latest
+#         :alt: Documentation Status
+#
+# .. image:: https://pyup.io/repos/github/dclark87/pytools/shield.svg
+#      :target: https://pyup.io/repos/github/dclark87/pytools/
+#      :alt: Updates
 
 
 pytools
