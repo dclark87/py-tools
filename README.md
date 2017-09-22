@@ -21,6 +21,9 @@ various tree data structures.
 - `linked_lists.py` - This module contains implementations of the linked list
 classes.
 
+## ml
+- `polyfit.py` - This module contains a polynomial line fitter.
+
 ## sort_search
 - `hash_tables.py` - This module contains the HashMap class and hash functions.
 - `sorting.py` - This module contains sorting functions.
